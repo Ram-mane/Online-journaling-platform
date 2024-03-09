@@ -156,7 +156,7 @@ export default function Story() {
   const savedActions = JSON.parse(localStorage.getItem("starClicked")) || {};
 
   // Set the initial state based on the saved actions
-  const initialStarClicked = savedActions[category.toUpperCase()] || false;
+  const initialStarClicked = savedActions[category?.toUpperCase()] || false;
 
   // Set the initial state based on the saved actions
   const [isStarClicked, setIsStarClicked] = useState(initialStarClicked);
