@@ -267,7 +267,7 @@ export default function Story() {
   // updated the handleCategorySelect2 function to update the favourite category and navigating to selected category
   function handleCategorySelect2(category) {
     setCategoryParam(category);
-    navigate(`/category/${category}`);
+    navigate(`/category/${category?.toLowerCase()}`);
     setSearch(category);
     setSelectedValue("");
     setSearchResults2([]);

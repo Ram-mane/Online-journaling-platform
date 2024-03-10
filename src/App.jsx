@@ -5,7 +5,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Navbar from './Navbar';
 import Story from './Story';
-import Figma from './category/Figma';
 
 function App() {
   return (
@@ -18,7 +17,7 @@ function App() {
           <Route path="/" element={<Story category="all" />} />
           
           {/* Route for category pages */}
-          <Route path="/category/:category" element={<Figma />} />
+          <Route path="/category/:category" element={<Story/>} />
 
           {/* Additional routes can be added as needed */}
         </Routes>
