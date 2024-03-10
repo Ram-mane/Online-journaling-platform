@@ -28,7 +28,7 @@ import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 
 const appSetting = {
   databaseURL:
-    "https://lean-platform-project-default-rtdb.asia-southeast1.firebasedatabase.app/",
+    "YOUR FIREBASE URL",
 };
 
 export const app = initializeApp(appSetting);
