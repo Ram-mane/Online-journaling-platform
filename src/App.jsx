@@ -15,7 +15,7 @@ function App() {
         {/* Add the routes for different categories */}
         <Routes>
           <Route path="/" element={<Story/>} />
-          <Route path="/:category" element={<Story/>} />
+          <Route path="category/:category" element={<Story/>} />
           {/* Additional routes can be added as needed */}
         </Routes>
       </div>
