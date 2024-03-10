@@ -2,17 +2,13 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import {
-  getDatabase,
   ref,
-  push,
-  onValue,
   get,
 } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
 import { database } from "./Story";
+import { toast } from "react-toastify";
 export default function Popular({ onChildValue }) {
-
   const [sortedDisplayTopics, setSortedDisplayTopics] = useState([]);
-
 
   // Hook to navigate to different pages
   const navigate = useNavigate();
@@ -54,7 +50,7 @@ export default function Popular({ onChildValue }) {
 
   // Array with to store topics to display the sorted list of topics based on favourite and popular
   // As mentioned firstly we have to display favourite topics and then popular topics
-    const displayTopics = [...favouriteTopics];
+  const displayTopics = [...favouriteTopics];
 
   // Calculate the number of remaining slots as we have to display 10 topics in the list
   var remainingSlots = 10 - displayTopics.length;
@@ -64,67 +60,53 @@ export default function Popular({ onChildValue }) {
     displayTopics.push(popularTopics[i]);
   }
 
-
-
-
+  // Function to fetch the number of stories in each category
   const noOfStoriesInEachCategory = async (category) => {
     try {
-      const snapshot = await get(ref(database, `List/${category?.toUpperCase()}`));
-  
+      // Fetch the number of stories in the category
+      const snapshot = await get(
+        ref(database, `List/${category?.toUpperCase()}`)
+      );
+
       if (snapshot.exists()) {
-        const noOfStories = Object.entries(snapshot.val());
-        return noOfStories.length;
+        const noOfStories = Object.entries(snapshot.val()).length;
+        return noOfStories;
       } else {
         return 0;
       }
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:");
       throw error; // Propagate the error
     }
   };
-  
+
   // Using Promise.all to fetch the number of stories for each category concurrently
-  const fetchStoriesPromises = displayTopics.map(category => noOfStoriesInEachCategory(category));
-  
+  const fetchStoriesPromises = displayTopics.map((category) =>
+    noOfStoriesInEachCategory(category)
+  );
+
   useEffect(() => {
     Promise.all(fetchStoriesPromises)
-    .then(noOfStoriesArray => {
-      console.log("display topic "+displayTopics)
-      console.log(noOfStoriesArray);
-      // Combine categories and their corresponding story counts into an array of objects
-      const categoryStoryCounts = displayTopics.map((category, index) => ({
-        category,
-        storyCount: noOfStoriesArray[index],
-      }));
-  
-      // Sort the array based on story counts in descending order
-      categoryStoryCounts.sort((a, b) => b.storyCount - a.storyCount);
-  
-      // Extract sorted categories from the sorted array
-      const sortedDisplayTopics = categoryStoryCounts.map(item => item.category);
-      setSortedDisplayTopics(sortedDisplayTopics);
-  
-      console.log(" sorted t "+sortedDisplayTopics);
-    })
-    .catch(error => {
-      console.error('Error fetching stories:', error);
-    });
-  }, [ localStorage.getItem("starClicked")]);
-  
+      .then((noOfStoriesArray) => {
+        // Combine categories and their corresponding story counts into an array of objects
+        const categoryStoryCounts = displayTopics.map((category, index) => ({
+          category,
+          storyCount: noOfStoriesArray[index],
+        }));
 
+        // Sort the array based on story counts in descending order
+        categoryStoryCounts.sort((a, b) => b.storyCount - a.storyCount);
 
-
-
-
-
-
-
-
-
-
-
-
- 
+        // Extract sorted categories from the sorted array
+        const sortedDisplayTopics = categoryStoryCounts.map(
+          (item) => item.category
+        );
+        setSortedDisplayTopics(sortedDisplayTopics);
+      })
+      .catch((error) => {
+        toast.error("Error fetching data" + error);
+      });
+  }, [localStorage.getItem("starClicked")]);
 
   return (
     <div className="popular">
@@ -147,5 +129,3 @@ export default function Popular({ onChildValue }) {
     </div>
   );
 }
-
-

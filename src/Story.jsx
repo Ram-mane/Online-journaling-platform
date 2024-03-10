@@ -118,6 +118,12 @@ export default function Story() {
 
   
   
+    // Add the new categories to the initialCategories array
+    // Use a Set to filter out duplicates
+    const uniqueCategoriesSet = new Set([...initialCategories, ...newCat]);
+    // Convert the Set back to an array
+    initialCategories = [...uniqueCategoriesSet];
+
 
   // handled share icon click to show the popup
   const handleOpenPopup = () => {
@@ -355,7 +361,7 @@ export default function Story() {
 
   function handleAdd() {
     setSelectedCategory(searchText.toUpperCase());
-    setSearchText("");
+    setSearchText('');
     setSearchResults([]);
     setShow(false);
 
@@ -367,7 +373,8 @@ export default function Story() {
         )
       ) {
         setCategories((prevCategories) => [...prevCategories, searchText]);
-        initialCategories.push(searchText);
+        initialCategories.push(searchText.toUpperCase());
+        console.log("initial cat"+initialCategories);
       }
     }
   }
@@ -832,7 +839,6 @@ export default function Story() {
                     </div>
                   </container>
                 </div>
-
                 {show4 ? (
                   <ul className="search-list search-list-2">
                     {initialCategories.map((category) => (
