@@ -19,7 +19,7 @@ import {
   getDatabase,
   ref,
   push,
-  onValue,
+  onValue, 
   get,
 } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
 import { Card, CardBody, Container } from "reactstrap";
