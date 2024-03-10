@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import Navbar from './Navbar'; // Adjust the path based on your project structure
-import Story from './Story'; // Adjust the path based on your project structure
+import Navbar from './Navbar';
+import Story from './Story';
+import Category from './category';
 
 function App() {
   return (
@@ -12,10 +13,13 @@ function App() {
       <div className="header">
         <ToastContainer />
         <Navbar />
-        {/* Add the routes for different categories */}
         <Routes>
-          <Route path="/" element={<Story/>} />
-          <Route path="/category/:category" element={<Story/>} />
+          {/* Route for the home page */}
+          <Route path="/" element={<Story category="all" />} />
+          
+          {/* Route for category pages */}
+          <Route path="/category/:category" element={<Category />} />
+
           {/* Additional routes can be added as needed */}
         </Routes>
       </div>
