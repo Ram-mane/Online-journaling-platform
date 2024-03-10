@@ -1454,12 +1454,29 @@ textarea {
   height: 250px;
   width: 350px;
   position: fixed;
-  top: 50%;
-  left: 50%;
+  top: 50% !important;
+  left: 45% !important;
   transform: translate(-50%, -50%);
   z-index: 1000;
   background-color: antiquewhite;
+  animation: slideIn 0.5s ease-in-out forwards;
+
+
+  /* Additional styling and properties */
 }
+
+
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-400px);
+  }
+  to {
+    transform: translateY(-100px);
+  }
+}
+
+
 
 .popup-card {
   /* Add your card styles here */
@@ -1478,9 +1495,9 @@ textarea {
   margin-top: 120px;
   cursor: pointer;
   margin-left: 45px;
-  width: 50px;
+  width: 70px;
   height: 40px;
-  background: transparent;
+  background: #6b5023;
   outline: none;
   border: none;
   font-family: var(--ff-lato);

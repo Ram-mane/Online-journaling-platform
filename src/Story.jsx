@@ -137,7 +137,7 @@ export default function Story() {
             </a>
           </CardBody>
           <button className="popup-button-close" onClick={onClose}>
-            <AiOutlineClose color="red" />
+            Close
           </button>
           <button className="popup-button-copy" onClick={handleCopyUrl}>
             Copy Link
