@@ -109,7 +109,7 @@ export default function Popular({ onChildValue }) {
     .catch(error => {
       console.error('Error fetching stories:', error);
     });
-  }, []);
+  }, [ localStorage.getItem("starClicked")]);
   
 
 
