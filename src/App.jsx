@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Navbar from './Navbar';
 import Story from './Story';
-import Category from './category';
+import Category from './Category';
 
 function App() {
   return (
