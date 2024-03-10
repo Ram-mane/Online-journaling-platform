@@ -3,7 +3,6 @@ import { AiFillStar, AiOutlineClose, AiOutlineSearch } from "react-icons/ai";
 import { BiChevronDown, BiStar } from "react-icons/bi";
 import { BsPen, BsArrowLeft } from "react-icons/bs";
 import { FaShare, FaStar } from "react-icons/fa";
-import StarIcon from "@mui/icons-material/Star";
 
 import Popular from "./Popular";
 import { CgArrowsExchangeAltV } from "react-icons/cg";
@@ -35,7 +34,6 @@ const appSetting = {
 export const app = initializeApp(appSetting);
 export const database = getDatabase(app);
 export const List = ref(database, "List");
-
 
 const cat = ref(database, "Category");
 
@@ -115,21 +113,16 @@ export default function Story() {
     }
   };
 
-
-  
-  
-    // Add the new categories to the initialCategories array
-    // Use a Set to filter out duplicates
-    const uniqueCategoriesSet = new Set([...initialCategories, ...newCat]);
-    // Convert the Set back to an array
-    initialCategories = [...uniqueCategoriesSet];
-
+  // Add the new categories to the initialCategories array
+  // Use a Set to filter out duplicates
+  const uniqueCategoriesSet = new Set([...initialCategories, ...newCat]);
+  // Convert the Set back to an array
+  initialCategories = [...uniqueCategoriesSet];
 
   // handled share icon click to show the popup
   const handleOpenPopup = () => {
     setShowPopup(true);
     setCopySuccess(true); // Optional: Set state to show a success message
-    
   };
 
   // SharePopup component
@@ -262,7 +255,6 @@ export default function Story() {
     setSearchResults2(results);
   }
 
-
   function handleCategorySelect(category) {
     setSelectedCategory(category.toUpperCase());
     setSearchText("");
@@ -273,11 +265,11 @@ export default function Story() {
   // updated the handleCategorySelect2 function to update the favourite category and navigating to selected category
   function handleCategorySelect2(category) {
     setCategoryParam(category);
-    navigate(`/category/${category?.toLowerCase()}`);
     setSearch(category);
     setSelectedValue("");
     setSearchResults2([]);
     searchBar(category);
+    navigate(`/category/${category?.toLowerCase()}`);
 
     // get the saved actions from localStorage
     const savedActions = JSON.parse(localStorage.getItem("starClicked")) || {};
@@ -361,7 +353,7 @@ export default function Story() {
 
   function handleAdd() {
     setSelectedCategory(searchText.toUpperCase());
-    setSearchText('');
+    setSearchText("");
     setSearchResults([]);
     setShow(false);
 
@@ -374,7 +366,7 @@ export default function Story() {
       ) {
         setCategories((prevCategories) => [...prevCategories, searchText]);
         initialCategories.push(searchText.toUpperCase());
-        console.log("initial cat"+initialCategories);
+        console.log("initial cat" + initialCategories);
       }
     }
   }

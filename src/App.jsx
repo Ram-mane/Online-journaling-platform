@@ -14,12 +14,11 @@ function App() {
         <Navbar />
         <Routes>
           {/* Route for the home page */}
-          <Route path="/" element={<Story category="all" />} />
+          <Route path="/" element={<Story />} />
           
           {/* Route for category pages */}
           <Route path="/category/:category" element={<Story/>} />
 
-          {/* Additional routes can be added as needed */}
         </Routes>
       </div>
     </Router>

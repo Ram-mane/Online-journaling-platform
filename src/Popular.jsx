@@ -48,8 +48,8 @@ export default function Popular({ onChildValue }) {
     (category) => !savedCategory[category]
   );
 
-  // Array with to store topics to display the sorted list of topics based on favourite and popular
-  // As mentioned firstly we have to display favourite topics and then popular topics
+  // Array  to store topics to display the sorted list of topics based on favourite and popular
+  // As mentioned firstly we have to display first favourite topics and then popular topics
   const displayTopics = [...favouriteTopics];
 
   // Calculate the number of remaining slots as we have to display 10 topics in the list
@@ -110,13 +110,13 @@ export default function Popular({ onChildValue }) {
 
   return (
     <div className="popular">
-      {/* Display appropriate header based on whether there are favourite topics */}
+      {/* Display  header based on whether there are favourite topics or popular topics*/}
       <h1>
         {favouriteTopics.length > 0 ? "Favourite Topics" : "Popular Topics"}
       </h1>
       <div className="list">
         <ul className="list-items">
-          {/* Render the appropriate list of topics */}
+          {/* Render the  list of topics */}
           {favouriteTopics.length > 0
             ? sortedDisplayTopics.map((topic) => (
                 <ListItem key={topic} value={topic} />
