@@ -48,18 +48,21 @@ export default function Popular({ onChildValue }) {
     (category) => !savedCategory[category]
   );
 
-  // Array  to store topics to display the sorted list of topics based on favourite and popular
-  // As mentioned firstly we have to display first favourite topics and then popular topics
-  const displayTopics = [...favouriteTopics];
+  // Set to store topics to display the sorted list of topics based on favourite and popular
+  // Using a Set to avoid duplication
+  const displayTopicsSet = new Set([...favouriteTopics]);
 
   // Calculate the number of remaining slots as we have to display 10 topics in the list
-  var remainingSlots = 10 - displayTopics.length;
+  var remainingSlots = 10 - displayTopicsSet.size;
 
   // Loop to fill remaining slots with popular topics
   for (var i = 0; i < remainingSlots && i < popularTopics.length; i++) {
-    displayTopics.push(popularTopics[i]);
+    displayTopicsSet.add(popularTopics[i]);
   }
 
+  // Convert Set back to Array if needed
+  const displayTopics = Array.from(displayTopicsSet);
+  
   // Function to fetch the number of stories in each category
   const noOfStoriesInEachCategory = async (category) => {
     try {
