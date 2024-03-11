@@ -1,0 +1,53 @@
+Installation Guide for project setup
+
+Introduction
+
+This installation guide will walk you through the steps to set up and run a Vite React
+App. The provided project comes in ZIP file format. You will need to unzip the folder,
+install necessary packages using npm, and configure the Firebase Realtime
+Database link to run the project successfully.
+
+
+Prerequisites
+● Node.js and npm installed on your machine.
+● Basic knowledge of JavaScript and React.
+● Firebase account (for setting up Firebase Realtime Database link).
+
+
+Steps to Install
+1. Unzip the ZIP Folder
+a. Locate the ZIP file you received.
+b. Extract the contents to your desired directory.
+2. Install Dependencies
+a. Open your terminal or command prompt.
+b. Navigate to the directory where you extracted the project.
+c. Run the following command to install dependencies : npm install
+This command will install all the necessary packages listed in the
+package.json file.
+
+3. Set Up Firebase Realtime Database
+a. If you haven't already, sign in to your Firebase account (or create one
+at Firebase).
+b. Go to the Firebase console.
+c. Create a new project or use an existing one.
+d. Navigate to the Realtime Database section. Obtain the URL of your
+Firebase Realtime Database.
+
+4. Configure Firebase Realtime Database Link
+a. Locate the Story.jsx file in your project's directory (src/Story.jsx).
+b. Open Story.jsx in your preferred code editor.
+c. Find the Firebase configuration section where the database URL is set.
+d. Update the database URL with your own Firebase Realtime Database
+link.
+5. Run the Project
+a. Once you have set up the Firebase Realtime Database link, you can
+now run the project.
+b. In your terminal, while still in the project directory, run the following
+command: npm run dev This command will start the development
+server.
+
+6. Accessing the Application
+
+a. Once the development server is running, open your web browser and
+navigate to the provided local server address (usually
+http://localhost:5174).
