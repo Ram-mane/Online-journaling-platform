@@ -1,6 +1,8 @@
 * {
   box-sizing: border-box;
+  
 }
+
 
 @font-face {
   font-family: "Gilroy";
@@ -31,7 +33,7 @@ html {
 }
 
 .navbar {
-  margin-top: 3.8125rem;
+  margin-top: 1.9605rem;
   border-top: 2px solid #3c3c3c;
   border-bottom: 2px solid #3c3c3c;
   display: flex;
@@ -145,12 +147,15 @@ html {
   gap: 20px;
   width: 100%;
   padding: 0 24px;
+  margin-bottom: 200px;
 }
 
 .section-1-head {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: -65px;
+  margin-bottom: -25px;
   /* width: 100%; */
 }
 
@@ -166,9 +171,10 @@ html {
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  width: 100%;
-  margin-right: 100px;
-  margin-left: 20px;
+  /* width: 100%; */
+  margin-right: 4%;
+  margin-left: 0;
+  margin-top: 3%;
 }
 
 .section-2 {
@@ -176,7 +182,7 @@ html {
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  width: 100%;
+  width: 30%;
 }
 
 .section-1-head > h1,
@@ -369,6 +375,8 @@ textarea {
   background: #6b5023;
   outline: none;
   border: none;
+  margin-top: 25px;
+  margin-left: 0;
 
   font-family: var(--ff-lato);
   font-weight: 500;
@@ -572,7 +580,7 @@ textarea {
 }
 
 .show-para > p {
-  max-height: 100px;
+  max-height: 100%;
   overflow-y: auto;
   margin: 0;
 }
@@ -583,7 +591,18 @@ textarea {
 
 .section-1 {
   justify-content: flex-start;
-  width: 469px;
+  width: 39%;
+  margin-right: 0;
+}
+
+.swiper-container {
+  margin-left: -230px;
+  margin-right: auto;
+  position: relative;
+  overflow: hidden;
+  list-style: none;
+  padding: 0;
+  z-index: 1;
 }
 
 @media screen and (max-width: 1024px) {
@@ -693,381 +712,20 @@ textarea {
   }
 }
 
-@media screen and (max-width: 1599px) {
-  .list-items {
-    width: 100%;
-    padding: 0 20px;
-    justify-content: center;
-  }
 
-  .list-items > li {
-    padding: 5px 3px;
+@media screen and (max-width: 428px) {
+  .popup-card {
+    /* Add your card styles here */
+    border: 2px solid #000000;
+    height: 100px;
+    padding-top: 50px;
+    padding-left: -100px !important;
+    margin-top: 50px;
+    width: 150px; /* Adjust the width as needed */
+    color: #000000;
+    background-color: antiquewhite;
+    transition: all cubic-bezier(0.86, 0, 0.07, 1) ease;
   }
-
-  /* read more and write your own story content */
-
-  /* .section-1-head>h1, */
-  .section-2-head > h1 {
-    width: 400px;
-    margin-top: auto;
-    font-weight: 500;
-    line-height: 60px;
-  }
-
-  /* write your own story text */
-  .section-1-head > h1 {
-    width: 450px;
-    margin-top: auto;
-    font-weight: 400;
-    line-height: 80px;
-  }
-
-  /* .btn-2{
-    cursor: pointer;
-    font-size: 2rem;
-    align-self: flex-end;
-    margin-top: -4.2rem;
-    margin-right: 0.5rem;
-  } */
-
-  /* .btn-2{
-    position: absolute;
-    font-size: 1.4rem;
-    top: 125px;
-  } */
-
-  /* .section-1-head>h1::after,
-  .section-2-head>h1::after{
-    width: 180px;
-    margin-right: 85px;
-    margin-top: -17px;
-    justify-content: center;
-  } */
-
-  /* line below the write your own story */
-  .section-1-head > h1::after {
-    width: 300px;
-    margin-right: 5rem;
-  }
-
-  /* line under the read srories */
-  .section-2-head > h1::after {
-    width: 170px;
-    margin-right: auto;
-    margin-top: auto;
-  }
-
-  label > h3 {
-    font-size: 1.2rem;
-  }
-
-  .subject > input,
-  textarea {
-    margin-top: 5px;
-    width: 350px !important;
-  }
-
-  .select-btn,
-  .selectCategory,
-  .content,
-  .search {
-    width: 350px;
-  }
-
-  .search > input {
-    width: 320px;
-  }
-
-  /* input of what are you lookin for */
-  .choose > input {
-    width: 100%;
-    font-size: 1rem;
-    padding: 10px;
-  }
-
-  .choose > label {
-    margin-bottom: -5px;
-  }
-
-  .filter {
-    margin-top: -10px;
-    margin-bottom: 1rem;
-    margin-left: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-  }
-
-  /* story container */
-  .item-section {
-    width: 700px;
-  }
-
-  .item-section::after {
-    width: 580px;
-  }
-
-  .content {
-    height: 220px;
-  }
-
-  .search-list {
-    max-height: 120px;
-    margin-top: 8px;
-
-  }
-  .search-list-2 {
-    max-height: 150px;
-    z-index: 9999;
-    padding: 5px;
-    width: 290px;
-    gap: 12px;
-  }
-
-  .item-section > h2 {
-    line-height: 40px;
-    width: 600px;
-    font-size: 2.5rem;
-  }
-
-  .show-para > p {
-    width: 580px;
-    font-size: 1.125rem;
-    line-height: 25px;
-  }
-
-  /* story container */
-  .item-section-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    overflow-x: auto !important;
-    overflow-y: auto !important;
-    overscroll-behavior-inline: contain;
-    height: 425px;
-  }
-
-  .submit-btn {
-    margin-top: 18px;
-    margin-right: 30px;
-  }
-  .subject {
-    margin-top: -25px;
-  }
-  .description {
-    margin-top: -20px;
-  }
-  .selectCategory {
-    margin-top: 0px;
-  }
-  .section-1 {
-    justify-content: flex-start;
-    width: 469px;
-    margin-left: 50px;
-    margin-right: 10px;
-    margin-top: 5px;
-  }
-  .section-1-content {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    width: 100%;
-    margin-right: 100px;
-    margin-left: 20px;
-  }
-}
-@media screen and (max-width: 1350px) {
-  .list-items {
-    width: 100%;
-    padding: 0 20px;
-    justify-content: center;
-  }
-
-  .list-items > li {
-    padding: 5px 3px;
-  }
-
-  /* read more and write your own story content */
-
-  /* .section-1-head>h1, */
-  .section-2-head > h1 {
-    width: 300px;
-    margin-top: auto;
-    font-weight: 400;
-    line-height: 50px;
-  }
-
-  /* write your own story text */
-  .section-1-head > h1 {
-    width: 450px;
-    margin-top: auto;
-    font-weight: 400;
-    line-height: 80px;
-  }
-
-  /* .btn-2{
-    cursor: pointer;
-    font-size: 2rem;
-    align-self: flex-end;
-    margin-top: -4.2rem;
-    margin-right: 0.5rem;
-  } */
-
-  /* .btn-2{
-    position: absolute;
-    font-size: 1.4rem;
-    top: 125px;
-  } */
-
-  /* .section-1-head>h1::after,
-  .section-2-head>h1::after{
-    width: 180px;
-    margin-right: 85px;
-    margin-top: -17px;
-    justify-content: center;
-  } */
-
-  /* line below the write your own story */
-  .section-1-head > h1::after {
-    width: 300px;
-    margin-right: 5rem;
-  }
-
-  /* line under the read srories */
-  .section-2-head > h1::after {
-    width: 170px;
-    margin-right: auto;
-    margin-top: auto;
-  }
-
-  label > h3 {
-    font-size: 1.2rem;
-  }
-
-  .subject > input,
-  textarea {
-    margin-top: 5px;
-    width: 350px !important;
-  }
-
-  .select-btn,
-  .selectCategory,
-  .content,
-  .search {
-    width: 350px;
-  }
-
-  .search > input {
-    width: 320px;
-  }
-
-  /* input of what are you lookin for */
-  .choose > input {
-    width: 100%;
-    font-size: 1rem;
-    padding: 10px;
-  }
-
-  .choose > label {
-    margin-bottom: -5px;
-  }
-
-  .filter {
-    margin-top: -10px;
-    margin-bottom: 1rem;
-    margin-left: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-  }
-
-  .item-section {
-    width: 600px;
-  }
-
-  .item-section::after {
-    width: 580px;
-  }
-
-  .content {
-    height: 220px;
-  }
-
-  .search-list {
-    max-height: 120px;
-    margin-top: 8px;
-  }
-
-  .search-list-2 {
-    max-height: 150px;
-    z-index: 9999;
-    padding: 3px !important;
-    width: 290px;
-    gap: 16px;
-  }
-
-  .item-section > h2 {
-    line-height: 40px;
-    width: 600px;
-    font-size: 2.5rem;
-  }
-
-  .show-para > p {
-    width: 580px;
-    font-size: 1.125rem;
-    line-height: 25px;
-  }
-
-  /* story container */
-  .item-section-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    overflow-x: auto !important;
-    overflow-y: auto !important;
-    overscroll-behavior-inline: contain;
-    height: 425px;
-  }
-
-  .submit-btn {
-    margin-top: 18px;
-    margin-right: 30px;
-  }
-  .subject {
-    margin-top: -25px;
-  }
-  .description {
-    margin-top: -20px;
-  }
-  .selectCategory {
-    margin-top: 0px;
-  }
-  .section-1 {
-    justify-content: flex-start;
-    width: 469px;
-    margin-left: 50px;
-    margin-right: 10px;
-    margin-top: 5px;
-  }
-  .section-1-content {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    width: 100%;
-    margin-right: 100px;
-    margin-left: 20px;
-  }
-}
-
-@media screen and (max-width: 425px) {
   body {
     overflow-y: auto;
   }
@@ -1078,7 +736,7 @@ textarea {
   }
 
   .navbar {
-    margin-top: 9px;
+    margin-top: 1.96005rem;
   }
 
   .nav-header > h4 {
@@ -1096,11 +754,15 @@ textarea {
     left: 150px;
   }
 
+ 
+
   .popular > h1 {
-    font-size: 0.625rem;
+    font-size: 0.825rem;
     line-height: 12px;
-    margin-bottom: 0;
-  }
+    margin-bottom: 10px;
+    margin-top: 15px;
+    font-weight: bold;
+}
 
   .list {
     overflow-x: auto;
@@ -1136,28 +798,37 @@ textarea {
     position: relative;
   }
 
+ 
+
   .section-1-head {
     gap: 1rem;
-    justify-content: center;
-    width: 75%;
-  }
+    justify-content: space-around;
+    width: 250px;
+    display: inline-flex;
+    position: absolute;
+    margin-top: 0px;
+    margin-right: -50px;
+    left: 25%;
+    padding-right: 0%;
+}
 
   .section-1::before {
     margin-top: 10px;
-    align-self: center;
-    position: absolute;
+    align-self: self-start;
+    position: relative;
     content: "";
-    left: -25px;
-    top: 10px;
-    width: 114%;
-    height: 2px;
+    left: 10px;
+    top: 40px;
+    width: 150%;
+    height: 1px;
     background-color: #000000;
   }
 
   .section-1-head > h1,
   .section-2-head > h1 {
     position: relative;
-    font-size: 1.375rem;
+    font-size: 1.575rem;
+    font-weight: bold;
     line-height: 25px;
     margin: 0;
     margin-top: 30px;
@@ -1179,6 +850,10 @@ textarea {
 
   .section-1-content {
     padding: 0 1rem;
+    width: 50%;
+    margin-top: 30px;
+    padding-left: 0;
+    margin-left: -10px;
   }
 
   label > h3 {
@@ -1229,10 +904,14 @@ textarea {
     font-size: 0.75rem;
   }
 
+  .select-btn, .selectCategory, .content, .search {
+    width: 300px !important;
+}
+
   .search > input {
     padding: 5px;
     padding-left: 40px;
-    width: 260px;
+    width: 280px !important;
   }
 
   .search-btn {
@@ -1247,32 +926,46 @@ textarea {
     width: 260px;
   }
 
+  .search-list-2 {
+    margin-top: -35px;
+    width: 200px;
+    gap: 2px;
+    margin-left: 85px;
+    height: 100px;
+}
+
   .search-list > li {
     font-size: 0.75rem;
   }
 
-  .section-1-content {
+  /* .section-1-content {
     width: 332px;
-  }
+  } */
+
+
 
   .submit-btn {
     margin-top: 20px;
-    margin-bottom: 0.5rem;
+    margin-bottom: -15px;
     width: 140px;
     padding: 7.35981px;
     font-size: 0.6875rem;
     line-height: 13px;
     height: 29.44px;
-  }
+    margin-right: 160px;
+}
+
+  
 
   .middle-line {
-    margin-top: -0.7rem;
+    margin-top: 1.8rem;
     align-self: center;
-    height: 2px;
+    height: 1.2px;
     width: 110vw;
     background-color: #000000;
     border: none;
-  }
+    margin-bottom: 10px;
+}
 
   .section-2-head {
     border: none;
@@ -1280,17 +973,37 @@ textarea {
   }
 
   .section-2-head > h1 {
-    margin: 0;
-  }
+    margin-top: -45px !important;
+    /* display: inline-flex; */
+    padding-left: -0% !important;
+}
+
+  
+
+  
 
   .section-2-head > h1::after {
-    right: 60px;
-  }
+    right: -65px !important;
+    top: 32px;
+}
 
   .choose > label > h3 {
     font-size: 0.76rem;
     line-height: 15px;
   }
+
+  
+  .choose {
+    margin-top: 15px;
+    margin-right: -35px !important;
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    right: -85px;
+}
 
   .choose > input {
     margin-bottom: 0;
@@ -1304,37 +1017,50 @@ textarea {
     line-height: 12px;
   }
 
+  .ms-2{
+    margin-left: -300px;
+    margin-top: -50px;
+    padding-right: 10px;
+}
+.share-btn {
+  margin-top: -45px;
+  font-size: 2rem;
+  padding-right: 0;
+}
+
   .btn-2 {
     position: absolute;
     font-size: 1.4rem;
-    top: 125px;
-  }
+    top: 89px;
+    right: -5px;
+}
 
   .container {
     margin: 0;
   }
-  .search-list-2 {
-    margin-top: 5px;
-    width: 200px;
-    gap: 10px;
-  }
+ 
+
+  
 
   .flex-filter {
-    top: -5px;
-    right: 10px;
+    top: 40px;
+    right: -5px;
     position: absolute;
-  }
+}
 
-  .filter-heading {
-    font-size: 0.75rem;
-    line-height: 14px;
-  }
+.filter-heading {
+  font-size: 0.8rem;
+  line-height: 9px;
+  margin-top: 16px;
+  margin-left:61px
+}
 
-  .total-story {
-    margin-top: 10px;
-    font-size: 0.75rem;
-    line-height: 14px;
-  }
+.total-story {
+  margin-top: 25px;
+  font-size: 0.85rem;
+  line-height: 14px;
+  margin-left: -15px;
+}
 
   .item-section::after {
     width: 0;
@@ -1344,11 +1070,10 @@ textarea {
 
   .item-section-main {
     width: 100%;
-  }
-
-  .item-section-main {
     height: initial;
   }
+
+ 
 
   .item-category > h3 {
     padding: 6.13636px;
@@ -1371,9 +1096,13 @@ textarea {
     box-shadow: 1px 1px 0px #000000;
     align-items: center;
     justify-content: flex-start;
-    width: 180px;
-    height: 261.62px;
+    width: 180px; 
+     height: 261.62px;
+
+   
   }
+
+  
 
   .left-arrow {
     font-size: 1.4rem;
@@ -1407,51 +1136,11 @@ textarea {
     line-height: 20px;
     align-self: flex-start;
   }
+
+  /*  */
 }
 
-@media screen and (max-width: 375px) {
-  .section-1-head {
-    gap: 0;
-    width: 70%;
-  }
 
-  .flex-filter {
-    right: -15px;
-  }
-}
-
-@media screen and (max-width: 320px) {
-  .section-1-head {
-    width: 50%;
-  }
-
-  .section-1-head > h1::after {
-    right: -10px;
-  }
-
-  .subject > input,
-  textarea,
-  .select-btn,
-  .content {
-    width: 250px !important;
-  }
-
-  .search > input {
-    width: 220px;
-  }
-
-  .section-1-content {
-    width: 284px;
-  }
-
-  .flex-filter {
-    right: -28px;
-  }
-
-  .reveal-main {
-    left: 10px !important;
-  }
-}
 
 /* Example CSS for centering the card */
 .share-popup {
@@ -1561,7 +1250,7 @@ textarea {
 .navbar {
   background-color: #f9f7f7;
   padding: 10px 0;
-  margin-top: 5px;
+  
   text-align: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }

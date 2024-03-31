@@ -20,6 +20,7 @@ function App() {
           <Route path="/category/:category" element={<Story/>} />
 
         </Routes>
+        
       </div>
     </Router>
   );

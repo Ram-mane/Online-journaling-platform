@@ -1,53 +1,35 @@
-Installation Guide for project setup
+Test Case ID: TC001
+Test Case Description: Verify user's ability to answer a multiple-choice question.
+Preconditions: User is logged into the quiz app and has navigated to the quiz section.
+Input Data: Question ID, User's Selected Answer
+Steps to Execute:
+1. Display a multiple-choice question to the user.
+2. User selects an answer (e.g., Option B).
+3. Submit the answer.
+Expected Results: The app should evaluate the user's response and display the correct answer.
+Actual Results: [Record the actual outcome observed during testing]
+Status: [Pass/Fail/Incomplete]
+Notes/Comments: [Any additional information or comments]
 
-Introduction
+Test Case ID: TC002
+Test Case Description: Verify the display of the next question after answering the current one.
+Preconditions: User has answered the previous question.
+Input Data: User's action to proceed to the next question.
+Steps to Execute:
+1. After submitting the answer to a question, the app should display the next question.
+Expected Results: The next question is displayed to the user.
+Actual Results: [Record the actual outcome observed during testing]
+Status: [Pass/Fail/Incomplete]
+Notes/Comments: [Any additional information or comments]
 
-This installation guide will walk you through the steps to set up and run a Vite React
-App. The provided project comes in ZIP file format. You will need to unzip the folder,
-install necessary packages using npm, and configure the Firebase Realtime
-Database link to run the project successfully.
-
-
-Prerequisites
-● Node.js and npm installed on your machine.
-● Basic knowledge of JavaScript and React.
-● Firebase account (for setting up Firebase Realtime Database link).
-
-
-Steps to Install
-1. Unzip the ZIP Folder
-a. Locate the ZIP file you received.
-b. Extract the contents to your desired directory.
-2. Install Dependencies
-a. Open your terminal or command prompt.
-b. Navigate to the directory where you extracted the project.
-c. Run the following command to install dependencies : npm install
-This command will install all the necessary packages listed in the
-package.json file.
-
-3. Set Up Firebase Realtime Database
-a. If you haven't already, sign in to your Firebase account (or create one
-at Firebase).
-b. Go to the Firebase console.
-c. Create a new project or use an existing one.
-d. Navigate to the Realtime Database section. Obtain the URL of your
-Firebase Realtime Database.
-
-4. Configure Firebase Realtime Database Link
-a. Locate the Story.jsx file in your project's directory (src/Story.jsx).
-b. Open Story.jsx in your preferred code editor.
-c. Find the Firebase configuration section where the database URL is set.
-d. Update the database URL with your own Firebase Realtime Database
-link.
-5. Run the Project
-a. Once you have set up the Firebase Realtime Database link, you can
-now run the project.
-b. In your terminal, while still in the project directory, run the following
-command: npm run dev This command will start the development
-server.
-
-6. Accessing the Application
-
-a. Once the development server is running, open your web browser and
-navigate to the provided local server address (usually
-http://localhost:5174).
+Test Case ID: TC003
+Test Case Description: Verify the final score calculation at the end of the quiz.
+Preconditions: User has completed the entire quiz.
+Input Data: User's completion action (e.g., clicking on the "Finish Quiz" button).
+Steps to Execute:
+1. User completes all quiz questions.
+2. User clicks on the "Finish Quiz" button.
+Expected Results: The app should calculate and display the final score based on the user's answers.
+Actual Results: [Record the actual outcome observed during testing]
+Status: [Pass/Fail/Incomplete]
+Notes/Comments: [Any additional information or comments]

@@ -151,6 +151,30 @@ export default function Story() {
     setShowPopup(false);
   };
 
+
+
+{/* <ShareModal isOpen={propsData.isModalOpen} onClose={propsData.closeModal} setLinkShare={propsData.setLinkShare}>
+                <div className='sharelink-box'>
+                  <h2>Share your story link</h2>
+                    <div className='sharebox-content'>
+                      <p className="copied__tooltip" style={tooltipStyles}>copied</p>
+
+                      <input type="text" 
+                        value={propsData.shareInput}
+                        onChange={(e) => propsData.setShareInput(e.target.value) }
+                        />
+
+
+                      <img src={propsData.copied ? "https://www.svgrepo.com/show/525288/copy.svg" : "https://www.svgrepo.com/show/524469/copy.svg"} 
+                        alt="copy image" style={{width: "20px", cursor: "pointer"}}
+                        onClick={propsData.handleCopyClick} />
+                    </div>
+                </div>
+			        </ShareModal> */}
+
+
+
+
   // Retrieve the user's previous actions from localStorage
   const savedActions = JSON.parse(localStorage.getItem("starClicked")) || {};
 
@@ -338,6 +362,7 @@ export default function Story() {
 
       // added the toast notification for the story published
       toast.success("Story published successfully");
+      console.log("story published successfully");
 
       // navigate to the selected/published category
       navigate(`/category/${selectedCategory.toLowerCase()}`);
@@ -681,7 +706,7 @@ export default function Story() {
                   id="subject"
                   name="subject"
                   type="text"
-                  placeholder="write the topic for your story "
+                  placeholder="Write your thoughts... "
                   value={subject}
                   onChange={(e) => handleValue(e)}
                   required
@@ -696,7 +721,7 @@ export default function Story() {
                   value={describe}
                   name="description"
                   id="describe"
-                  placeholder="write what your story is about here"
+                  placeholder="Start journaling your thoughts"
                   onChange={(e) => handleValue(e)}
                   required
                 />
@@ -755,15 +780,16 @@ export default function Story() {
                     )}
                   </div>
                 )}
-              </div>
-
-              <button
+                 <button
                 type="submit"
                 className="submit-btn"
                 onClick={handleSubmit}
               >
                 PUBLISH YOUR STORY
               </button>
+              </div>
+
+             
             </div>
           )}
         </form>
@@ -792,6 +818,7 @@ export default function Story() {
                     required
                   />
                   <BiChevronDown className="btn-2" onClick={handleClick2} />
+                  
 
                   {/*  changed the position of the sort  */}
                   <container className="container-fluid">
@@ -799,21 +826,31 @@ export default function Story() {
                       <div className="flex-filter p-2 ">
                         {/*added  Star icon from the react-icons */}
                         <div className="ms-2">
-                          <FaStar
+                          {/* <FaStar
                             size={25}
                             color={isStarClicked ? "yellow" : "grey"}
                             onClick={handleStarClick}
-                          />
+                          /> */}
+                          <div className='star-icon' style={{width: "20px", marginRight:'15px'}} onClick={handleStarClick}>
+                  <img src={isStarClicked ? "https://www.svgrepo.com/show/513354/star.svg" : "https://www.svgrepo.com/show/501365/star-light.svg"}
+                   alt="star icon"
+                   width={20} />
+                </div>
                         </div>
 
                         {/*added  share icon from the react-icons */}
 
                         <div>
-                          <FaShare
+                          {/* <FaShare
                             className="share-icon"
                             onClick={handleOpenPopup}
-                          />
+                          /> */}
                           {/* Share Popup */}
+                          <div className='share-btn' style={{width: "20px" ,  marginRight:'20px'}} onClick={handleOpenPopup}>
+                    <img src={ showPopup ? "https://www.svgrepo.com/show/460077/share-alt.svg" : "https://www.svgrepo.com/show/521832/share-1.svg"} 
+                    
+                      alt="share button img" style={{width: "100%"}} />
+                </div>
                           {showPopup && SharePopup(categoryURL, closePopup)}
                         </div>
 
@@ -980,6 +1017,8 @@ export default function Story() {
           </section>
         </container>
       </div>
+     
     </div>
+    
   );
 }

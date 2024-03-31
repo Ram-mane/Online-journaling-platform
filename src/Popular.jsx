@@ -51,6 +51,7 @@ export default function Popular({ onChildValue }) {
   // Set to store topics to display the sorted list of topics based on favourite and popular
   // Using a Set to avoid duplication
   const displayTopicsSet = new Set([...favouriteTopics]);
+  // console.log(displayTopicsSet.values());
 
   // Calculate the number of remaining slots as we have to display 10 topics in the list
   var remainingSlots = 10 - displayTopicsSet.size;
@@ -58,6 +59,7 @@ export default function Popular({ onChildValue }) {
   // Loop to fill remaining slots with popular topics
   for (var i = 0; i < remainingSlots && i < popularTopics.length; i++) {
     displayTopicsSet.add(popularTopics[i]);
+    // console.log(displayTopicsSet.values());
   }
 
   // Convert Set back to Array if needed
