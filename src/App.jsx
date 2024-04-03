@@ -18,7 +18,7 @@ function App() {
           <Route path="/" element={<Story />} />
           
           {/* Route for category pages */}
-          <Route path="/category/:category" element={<Story/>} />
+          <Route path="/:category" element={<Story/>} />
 {/* hi this is venom */}
         </Routes>
         

@@ -72,7 +72,7 @@
   }
   
   .cat-name:hover {
-    background-color: #864f33;
+    background-color: #6b0736;
     color: whi; /* Change the color to orange when hovered */
   }
   
@@ -89,7 +89,7 @@
     cursor: pointer;
 }
 
-span:hover{
+ .cat-name > span:hover{
     color: white;
 
 }

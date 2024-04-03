@@ -96,13 +96,13 @@ export default function Story() {
   // used useNavigate to navigate to the selected category
   const navigate = useNavigate();
   const categoryURL = category
-    ? `${window.location.origin}/category/${category}`
+    ? `${window.location.origin}/${category}`
     : `${window.location.origin}/`;
 
   // handle share to generate the path url of current category
   const handleCopyUrl = () => {
     const categoryURL = category
-      ? `${window.location.origin}/category/${category}`
+      ? `${window.location.origin}/${category}`
       : `${window.location.origin}/`;
     console.log("categoryURL : " + categoryURL);
     navigator.clipboard.writeText(categoryURL);
@@ -132,7 +132,7 @@ export default function Story() {
       <div className="share-popup">
         <Card className="popup-card">
           <CardHeader className="popup-header">
-            <h2>Share your story link</h2>
+            <h2 className="pop-head">Share your story link</h2>
           </CardHeader>
           <CardBody className="popup-link">
             <a href={categoryURL} target="_blank" rel="noopener noreferrer">
@@ -289,7 +289,7 @@ export default function Story() {
     setSelectedValue("");
     setSearchResults2([]);
     searchBar(category);
-    navigate(`/category/${category?.toLowerCase()}`);
+    navigate(`/${category?.toLowerCase()}`);
 
     // get the saved actions from localStorage
     const savedActions = JSON.parse(localStorage.getItem("starClicked")) || {};
@@ -362,7 +362,7 @@ export default function Story() {
       
 
       // navigate to the selected/published category
-      navigate(`/category/${selectedCategory.toLowerCase()}`);
+      navigate(`/${selectedCategory.toLowerCase()}`);
       window.location.reload();
     }
 
@@ -434,7 +434,7 @@ export default function Story() {
     setSelectedValue(value);
 
     // navigate to the selected category from the popular topics
-    navigate(`/category/${value.toLowerCase()}`);
+    navigate(`/${value.toLowerCase()}`);
     console.log("child val" + value);
     setSearch("");
     window.location.reload();

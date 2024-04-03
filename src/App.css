@@ -691,6 +691,10 @@ transform: rotate(270deg);
   margin-top: -10px;
 }
 
+.section-1-head{
+  z-index: -1;
+}
+
   .section-1-head > h1 {
     /* margin-top: 0; */
     width: 300px;
@@ -864,17 +868,58 @@ transform: rotate(270deg);
 
 @media screen and (min-width: 370px) and (max-width: 428px) {
   .popup-card {
-    /* Add your card styles here */
-    border: 2px solid #000000;
-    height: auto;
-    padding-top: 50px;
-    padding-left: -100px !important;
-    margin-top: 50px;
-    width: auto; /* Adjust the width as needed */
-    color: #000000;
-    background-color: antiquewhite;
-    transition: all cubic-bezier(0.86, 0, 0.07, 1) ease;
+    background-color: white;
+    padding: 4px;
+    padding-top: 0px;
+    /* padding-top: 20px;
+    padding-bottom: 25px; */
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-inline: 40px;
+    flex-direction: column;
+    width: 90%;
+    height: 100px;
   }
+
+  .pop-head{
+    font-size: 1rem !important;
+   
+}
+  
+  .copy-btn {
+    /* position: absolute;
+    top: 77px; */
+    background-color: transparent;
+    border: none;
+    margin-left: 5px;
+    margin-top: 2px;
+    font-size: 0.8rem !important;
+  }
+  
+  
+  
+  .popup-link {
+    margin-top: 5px;
+   width: 120%;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 5px;
+  }
+  
+  .popup-link > a {
+    text-decoration: none;
+    color: black;
+    margin-left: 35px !important;
+    font-size: 0.9rem !important;
+    /* margin-right: -10%; */
+    /* margin-top: -10px !important; */
+}
 
   .item-section-container::after {
     margin-bottom: 0 !important;
@@ -1330,18 +1375,60 @@ transform: rotate(270deg);
 }
 
 @media screen and (min-width: 300px) and (max-width: 369px) {
+
+  
+
   .popup-card {
-    /* Add your card styles here */
-    border: 2px solid #000000;
-    height: auto;
-    padding-top: 50px;
-    padding-left: -100px !important;
-    margin-top: 50px;
-    width: auto; /* Adjust the width as needed */
-    color: #000000;
-    background-color: antiquewhite;
-    transition: all cubic-bezier(0.86, 0, 0.07, 1) ease;
+    background-color: white;
+    padding: 4px;
+    padding-top: 0px;
+    /* padding-top: 20px;
+    padding-bottom: 25px; */
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-inline: 40px;
+    flex-direction: column;
+    width: 90%;
+    height: 100px;
   }
+
+  .pop-head{
+    font-size: 1rem !important;
+   
+}
+  
+  .copy-btn {
+    /* position: absolute;
+    top: 77px; */
+    background-color: transparent;
+    border: none;
+    margin-left: 5px;
+    margin-top: 2px;
+    font-size: 0.8rem !important;
+  }
+  
+  
+  
+  .popup-link {
+    margin-top: 5px;
+   width: 120%;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 5px;
+  }
+  
+  .popup-link > a {
+    text-decoration: none;
+    color: black;
+    margin-left: 10px;
+    font-size: 0.7rem !important;
+}
 
   .item-section-container::after {
     margin-bottom: 0 !important;
@@ -1986,12 +2073,16 @@ label > h3 {
     padding-right: 0%;
   }
 
+  .section-1-head{
+    z-index: -1;
+  }
+
   .section-1-head > h1,
   .section-2-head > h1 {
     /* margin-top: 0; */
     width: 300px;
     font-size: 2rem;
-    margin-top: 40px !important;
+    margin-top: 60px !important;
   }
 
   .select-btn,
@@ -2013,7 +2104,7 @@ label > h3 {
     position: absolute;
     justify-content: end;
     top: 1.5%;
-    left: 125%;
+    left: 145%;
 }
 
   .navbar {
@@ -2162,9 +2253,11 @@ label > h3 {
   }
 
   .search-list {
-    width: 100%;
+    width: 130% !important;
     gap: 5px;
-  }
+    margin-left: -13%;
+    margin-top: 13%;
+}
 
   .down {
     font-size: 1.5rem;
@@ -2201,6 +2294,16 @@ label > h3 {
     display: flex;
     justify-content: flex-start;
     line-height: 15px;
+}
+
+.item-section {
+  width: 420px;
+}
+
+.show-para > p {
+  width: 408px;
+  font-size: 1.125rem;
+  line-height: 25px;
 }
 }
 
