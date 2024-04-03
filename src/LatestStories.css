@@ -1,0 +1,150 @@
+.container-latest {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:flex-start;
+    width: 350px;
+    height: 100vh; /* Adjust as needed */
+    margin-bottom: 50px;
+    padding: 20px;
+    color: #000;
+    border: 1px solid #000;
+    border-radius: 10px;
+    position: fixed;
+    right: 0;
+    margin-top: 5px;
+}
+
+
+.latest-stories {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: self-end;
+    width: 95%;
+    height: 200px;
+    margin-bottom: 5px;
+    padding: 20px;
+    color: rgba(6, 3, 3, 0.916);
+    border-radius: 10px;
+    flex-wrap: wrap;
+    position: absolute;
+    top: -30px;
+}
+
+@media screen and (max-width: 1450px) {
+    .container-latest {
+        display: none;
+    }
+    
+}
+
+
+
+.latest-stories-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start; /* Align items to the start of the flex container */
+    align-items: flex-start; /* Align items to the start of each line */
+    width: 320px; /* Occupy the full width of the container */
+    height: auto;
+    margin-bottom: 5px;
+    padding: 0px;
+    color: rgba(6, 3, 3, 0.916);
+    border-radius: 10px;
+    flex-wrap: wrap; /* Allow items to wrap onto multiple lines */
+    position: fixed;
+    top: 350px;
+    overflow-y: auto; /* Make the container vertically scrollable */
+    max-height: 460px; /* Set a maximum height for the container */
+}
+
+.latest-stories >.cat-name {
+    font-size: 0.8rem;
+    font-weight: 300;
+    margin: 5px;
+    padding: 3px;
+    border: 1px solid #060606;
+    color: rgba(6, 3, 3, 0.916);
+    background-color: transparent;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cat-name:hover {
+    background-color: #864f33;
+    color: whi; /* Change the color to orange when hovered */
+  }
+  
+  .cat-name:active {
+    background-color: #ff6347; /* Change the color to tomato when clicked */
+  }
+  
+
+
+
+.cat-name> span {
+    text-decoration: none;
+    color: rgba(6, 3, 3, 0.916);
+    cursor: pointer;
+}
+
+span:hover{
+    color: white;
+
+}
+
+
+
+ h3 {
+    padding: 10px;
+    margin-right: 50px !important;
+    display: flex;
+    justify-content: center;
+    margin-right: 50px;
+}
+
+.latest-stories > h4{
+    padding: 0;
+    font-size: 1.4rem !important;
+    font-weight: 500;
+}
+
+ .story-container{
+    font-size: 0.8rem;
+    font-weight: 200 !important;
+    margin: 5px; /* Add margin around each item for spacing */
+    padding: 3px;
+    height: auto;
+    width: 280px;
+    border: 1px solid rgba(6, 3, 3, 0.916)!important;
+    color: rgba(6, 3, 3, 0.916);
+    background-color: transparent;
+    border-radius: 10px;
+    overflow-y: auto; /* Make the container vertically scrollable */
+    max-height: 200px; /* Set a maximum height for the container */
+
+}
+h4 {
+    display: block;
+    margin-block-start: 1.33em;
+    margin-block-end: 1.33em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+    margin-top: 3px;
+    margin-right: 30px;
+}
+
+@media screen and (min-width: 1408px) and (max-width: 1696px) {
+
+   
+
+    .latest-stories-container {
+        top: 350px;
+        max-height: 400px;
+    }
+
+    
+}

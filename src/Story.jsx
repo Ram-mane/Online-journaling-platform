@@ -22,9 +22,10 @@ import {
   onValue, 
   get,
 } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
-import { Card, CardBody, Container } from "reactstrap";
+import { Card, CardBody, CardHeader, Container } from "reactstrap";
 import { toast } from "react-toastify";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import LatestStories from "./LatestStories";
 
 const appSetting = {
   databaseURL:
@@ -130,19 +131,32 @@ export default function Story() {
     return (
       <div className="share-popup">
         <Card className="popup-card">
-          <CardBody>
+          <CardHeader className="popup-header">
+            <h2>Share your story link</h2>
+          </CardHeader>
+          <CardBody className="popup-link">
             <a href={categoryURL} target="_blank" rel="noopener noreferrer">
               {categoryURL}
+              
             </a>
+            <button className="copy-btn" onClick={handleCopyUrl}>
+           
+            <img src={ "https://www.svgrepo.com/show/524469/copy.svg"} 
+                        alt="copy image" style={{width: "20px", cursor: "pointer"}}
+                         />
+          </button>
           </CardBody>
-          <button className="popup-button-close" onClick={onClose}>
-            Close
-          </button>
-          <button className="popup-button-copy" onClick={handleCopyUrl}>
-            Copy Link
-          </button>
+          
+          <button className="close-button" onClick={onClose}>
+					<img src="https://www.svgrepo.com/show/522506/close.svg" alt="close button" width="20px" />
+				</button>
+          
+          
         </Card>
       </div>
+
+
+    
     );
   };
 
@@ -153,24 +167,6 @@ export default function Story() {
 
 
 
-{/* <ShareModal isOpen={propsData.isModalOpen} onClose={propsData.closeModal} setLinkShare={propsData.setLinkShare}>
-                <div className='sharelink-box'>
-                  <h2>Share your story link</h2>
-                    <div className='sharebox-content'>
-                      <p className="copied__tooltip" style={tooltipStyles}>copied</p>
-
-                      <input type="text" 
-                        value={propsData.shareInput}
-                        onChange={(e) => propsData.setShareInput(e.target.value) }
-                        />
-
-
-                      <img src={propsData.copied ? "https://www.svgrepo.com/show/525288/copy.svg" : "https://www.svgrepo.com/show/524469/copy.svg"} 
-                        alt="copy image" style={{width: "20px", cursor: "pointer"}}
-                        onClick={propsData.handleCopyClick} />
-                    </div>
-                </div>
-			        </ShareModal> */}
 
 
 
@@ -347,6 +343,8 @@ export default function Story() {
 
     if (subject && describe && selectedCategory) {
       push(ref(database, `List/${selectedCategory}`), Data);
+      toast.success("Story published successfully");
+      console.log("story published successfully");
 
       if (selectedCategory) {
         if (
@@ -361,8 +359,7 @@ export default function Story() {
       }
 
       // added the toast notification for the story published
-      toast.success("Story published successfully");
-      console.log("story published successfully");
+      
 
       // navigate to the selected/published category
       navigate(`/category/${selectedCategory.toLowerCase()}`);
@@ -496,6 +493,7 @@ export default function Story() {
 
   const revealMain = {
     position: "absolute",
+    border: "2px solid red",
     top: "0px",
     left: windowWidth > 375 ? "-75px" : windowWidth > 320 ? "-90px" : "-80px",
     width: windowWidth > 320 ? "283px" : "250px",
@@ -521,6 +519,7 @@ export default function Story() {
     setReveal({});
   }
 
+  console.log('mappable initial ', mappable)
   useEffect(() => {
     if (selectedValue) {
       onValue(
@@ -571,84 +570,60 @@ export default function Story() {
     setContent((prev) => !prev);
   }
 
-  function paragraph(item) {
-    if (item) {
-      const words = item[1].split(" ");
-      const isExpanded = expandedSections[item[2]];
-      const isRevealed = reveal[item[2]];
+  function paragraph(item){
 
+    if(item){
+      const words = item[1].split(' ')
+      const isExpanded = expandedSections[item[2]]
+      const isRevealed = reveal[item[2]]
+  
       if (words.length > 24 && !isExpanded) {
         return (
-          <div
-            className="item-section"
-            key={item[2]}
-            style={isRevealed ? revealMain : {}}
-          >
-            <div className="item-category">
+          <div className='item-section' key={item[2]} style={isRevealed ? revealMain : {}}>
+            <div className='item-category'>
               <h3>{item[0]}</h3>
               <p>{formattedDate(item[4])}</p>
             </div>
-            {isRevealed && (
-              <BsArrowLeft className="left-arrow" onClick={goback} />
-            )}
+            {isRevealed && <BsArrowLeft className='left-arrow' onClick={goback}/>}
             <h2 style={isRevealed ? revealhead : {}}>{item[3]}</h2>
-            <div className="show-para">
-              {isRevealed ? (
-                <p style={isRevealed ? revealPara : {}}>
-                  {item[1].slice(0, item[1].length)}...
-                </p>
-              ) : (
-                <p>{item[1].slice(0, 154)}...</p>
-              )}
+            <div className='show-para'>
+              {isRevealed ? <p style={isRevealed ? revealPara : {}}>{item[1].slice(0, item[1].length)}...</p> : 
+              <p>{item[1].slice(0, 154)}...</p>}
             </div>
-            {windowWidth > 425 ? (
-              <span className="read-more" onClick={() => togglePara([item[2]])}>
+              {windowWidth > 425 ? <span className='read-more' onClick={() => togglePara([item[2]])}>
                 Read more...
-              </span>
-            ) : (
-              !isRevealed && (
-                <span
-                  className="read-more"
-                  onClick={() => togglePara([item[2]])}
-                >
-                  Read more...
-                </span>
-              )
-            )}
+              </span> :
+
+              !isRevealed && <span className='read-more' onClick={() => togglePara([item[2]])}>
+              Read more...
+            </span>}
           </div>
-        );
-      } else {
+        )
+      }
+  
+      else{
         return (
-          <div
-            className="item-section"
-            key={item[2]}
-            style={isRevealed ? revealMain : {}}
-          >
-            <div className="item-category">
+          <div className='item-section' key={item[2]} style={isRevealed ? revealMain : {}}>
+            <div className='item-category'>
               <h3>{item[0]}</h3>
               <p>{formattedDate(item[4])}</p>
             </div>
-            {isRevealed && (
-              <BsArrowLeft className="left-arrow" onClick={goback} />
-            )}
+            {isRevealed && <BsArrowLeft className='left-arrow' onClick={goback}/>}
             <h2 style={isRevealed ? revealhead : {}}>{item[3]}</h2>
-            <div className="show-para">
+            <div className='show-para'>
               <p style={isRevealed ? revealPara : {}}>{item[1]}</p>
             </div>
-            {words.length > 24 && windowWidth > 425 ? (
-              <span className="read-more" onClick={() => togglePara(item[2])}>
-                Read less
-              </span>
-            ) : (
-              words.length > 24 &&
-              !isRevealed && (
-                <span className="read-more" onClick={() => togglePara(item[2])}>
-                  Read more...
+              {words.length > 24 && windowWidth > 425 ? (
+                <span className='read-more' onClick={() => togglePara(item[2])}>
+                  Read less
                 </span>
-              )
-            )}
+              ) :
+
+             (words.length > 24 && !isRevealed) && <span className='read-more' onClick={() => togglePara(item[2])}>
+              Read more...
+            </span>}
           </div>
-        );
+        )
       }
     }
   }
@@ -796,7 +771,7 @@ export default function Story() {
 
         <div className="middle-line" />
 
-        <container className="container-fluid">
+        <div className="container-fluid">
           <section className="section-2">
             <div className="section-2-head">
               {/* updated the story section */}
@@ -821,7 +796,7 @@ export default function Story() {
                   
 
                   {/*  changed the position of the sort  */}
-                  <container className="container-fluid">
+                  <div className="container-fluid">
                     <div className="mt-3">
                       <div className="flex-filter p-2 ">
                         {/*added  Star icon from the react-icons */}
@@ -866,7 +841,7 @@ export default function Story() {
                         />
                       </div>
                     </div>
-                  </container>
+                  </div>
                 </div>
                 {show4 ? (
                   <ul className="search-list search-list-2">
@@ -921,7 +896,10 @@ export default function Story() {
               </h1>
             </div>
 
-            {windowWidth > 425 ? (
+            <section className="section-3"><LatestStories/></section>
+
+
+            {windowWidth > 435 ? (
               <div>
                 {selectedValue && (
                   <div className="container-fluid">
@@ -956,22 +934,22 @@ export default function Story() {
             ) : (
               <div className="container-fluid">
                 <section className="item-section-main">
-                  <Swiper
-                    effect="coverflow"
-                    // grabCursor='true'
-                    centeredSlides="true"
-                    slidesPerView={3}
-                    coverflowEffect={{
-                      rotate: 0,
-                      stretch: 0,
-                      depth: 200,
-                      modifier: 1,
-                      slideShadows: false,
-                    }}
-                    // onSwiper={handleSwiperInit}
-                    // onSlideChange={handleSlideChange}
-                  >
-                    <div className="swiper-wrapper">
+                <Swiper 
+                  effect="coverflow"
+                  // grabCursor='true'
+                  centeredSlides='true'
+                  slidesPerView={3}
+                  coverflowEffect={{
+                    rotate: 0,
+                    stretch: 0,
+                    depth: 200,
+                    modifier: 1,
+                    slideShadows: false,
+                  }}
+                  // onSwiper={handleSwiperInit}
+                  // onSlideChange={handleSlideChange}
+                >
+                    {/* <div className="swiper-wrapper" > */}
                       {(() => {
                         const sortedMappable = mappable.sort((a, b) => {
                           const dateA = new Date(
@@ -999,23 +977,28 @@ export default function Story() {
                             return flipped ? -1 : 1;
                           }
                         });
-
+                          console.log('sortedMappable', sortedMappable)
                         return sortedMappable.map((items, index) => {
                           const random = Math.random() * 4;
+                          console.log('items in mapp ', items)
                           return (
                             <SwiperSlide key={random} className="swiper-slide">
-                              {paragraph(Object.values(items[1]))}
+
+                              {
+                              paragraph(Object.values(items[1]))
+                              
+                              }
                             </SwiperSlide>
                           );
                         });
                       })()}
-                    </div>
+                    {/* </div> */}
                   </Swiper>
                 </section>
               </div>
             )}
           </section>
-        </container>
+        </div>
       </div>
      
     </div>

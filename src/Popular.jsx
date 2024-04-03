@@ -7,8 +7,22 @@ import {
 } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
 import { database } from "./Story";
 import { toast } from "react-toastify";
+import { List } from "./Story";
+
 export default function Popular({ onChildValue }) {
   const [sortedDisplayTopics, setSortedDisplayTopics] = useState([]);
+  // const [popularTopics, setPopularTopics] = useState([
+  //   "TRAVELLING",
+  //   "BANGALORE STORIES",
+  //   "GOA DIARIES",
+  //   "NITK STUFFS",
+  //   "IIM THINGS",
+  //   "IIMB FACTS",
+  //   "SHAYARI",
+  //   "VIKAS MEENA",
+  // ]);
+
+
 
   // Hook to navigate to different pages
   const navigate = useNavigate();
@@ -36,6 +50,53 @@ export default function Popular({ onChildValue }) {
     "VIKAS MEENA",
   ];
 
+
+
+
+
+  // get popular topics
+
+
+
+  // useEffect(() => {
+  //   const popularCat = async () => {
+  //     try {
+  //       const snapshot = await get(ref(database, `List`));
+  //       if (snapshot.exists()) {
+  //         const categoryData = snapshot.val();
+  //         const categoryArray = Object.entries(categoryData);
+
+  //         // Sort categories by number of stories in descending order
+  //         categoryArray.sort(
+  //           ([, a], [, b]) => Object.keys(b).length - Object.keys(a).length
+  //         );
+
+  //         // Extract the names of the first 10 categories
+  //         const top10Categories = categoryArray
+  //           .slice(0, 10)
+  //           .map(([categoryName]) => categoryName);
+
+  //         console.log("Top 10 Categories:", top10Categories);
+
+  //         // Set the state or perform any further actions with the top 10 categories
+  //         setPopularTopics(top10Categories);
+  //       } else {
+  //         console.log("No data available");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //       throw error;
+  //     }
+  //   };
+
+  //   popularCat();
+  // }, []);
+
+
+
+
+
+
   // Get the saved actions from localStorage
   const savedCategory = JSON.parse(localStorage.getItem("starClicked")) || {};
 
@@ -54,7 +115,7 @@ export default function Popular({ onChildValue }) {
   // console.log(displayTopicsSet.values());
 
   // Calculate the number of remaining slots as we have to display 10 topics in the list
-  var remainingSlots = 10 - displayTopicsSet.size;
+  var remainingSlots = 8 - displayTopicsSet.size;
 
   // Loop to fill remaining slots with popular topics
   for (var i = 0; i < remainingSlots && i < popularTopics.length; i++) {
@@ -67,7 +128,12 @@ export default function Popular({ onChildValue }) {
   
   // Function to fetch the number of stories in each category
   const noOfStoriesInEachCategory = async (category) => {
+    console.log(`category`, category);
     try {
+
+      
+
+
       // Fetch the number of stories in the category
       const snapshot = await get(
         ref(database, `List/${category?.toUpperCase()}`)
@@ -75,6 +141,7 @@ export default function Popular({ onChildValue }) {
 
       if (snapshot.exists()) {
         const noOfStories = Object.entries(snapshot.val()).length;
+        console.log(`no of stories`, noOfStories);
         return noOfStories;
       } else {
         return 0;
@@ -86,9 +153,13 @@ export default function Popular({ onChildValue }) {
   };
 
   // Using Promise.all to fetch the number of stories for each category concurrently
-  const fetchStoriesPromises = displayTopics.map((category) =>
-    noOfStoriesInEachCategory(category)
+  const fetchStoriesPromises = displayTopics.map((cat) =>
+    noOfStoriesInEachCategory(cat),
+    // console.log(`no of stories`, noOfStoriesInEachCategory(cat))
+
   );
+
+  console.log('featch cat : ',fetchStoriesPromises);
 
   useEffect(() => {
     Promise.all(fetchStoriesPromises)
@@ -98,6 +169,7 @@ export default function Popular({ onChildValue }) {
           category,
           storyCount: noOfStoriesArray[index],
         }));
+        console.log(`categoryStoryCounts`, categoryStoryCounts);
 
         // Sort the array based on story counts in descending order
         categoryStoryCounts.sort((a, b) => b.storyCount - a.storyCount);
