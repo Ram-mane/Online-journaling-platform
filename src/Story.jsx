@@ -19,6 +19,7 @@ import {
   getDatabase,
   ref,
   push,
+  update,
   onValue, 
   get,
 } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
@@ -37,6 +38,8 @@ export const database = getDatabase(app);
 export const List = ref(database, "List");
 
 const cat = ref(database, "Category");
+
+export const storyCount = ref(database, "StoryCount");
 
 let initialCategories = [
   "FIGMA",
@@ -92,6 +95,28 @@ export default function Story() {
   const [categoryParam, setCategoryParam] = useState(category ? category : "");
   const [copySuccess, setCopySuccess] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+
+  const [storyCounts, setStoryCounts] = useState({});
+
+// story count ref
+  useEffect(() => {
+
+    onValue(storyCount, (snapshot) => {
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        // Update the state with the fetched storyCounts
+        setStoryCounts(data);
+      } else {
+        console.log("No data available");
+      }
+    });
+
+    // Clean up the listener when the component unmounts
+    return () => {
+      // Detach the listener
+      onValue(storyCountRef, null);
+    };
+  }, []);
 
   // used useNavigate to navigate to the selected category
   const navigate = useNavigate();
@@ -331,6 +356,7 @@ export default function Story() {
   }
 
   function handleSubmit(e) {
+
     const random = Math.random() * 4;
     e.preventDefault();
     const Data = {
@@ -343,8 +369,11 @@ export default function Story() {
 
     if (subject && describe && selectedCategory) {
       push(ref(database, `List/${selectedCategory}`), Data);
+
       toast.success("Story published successfully");
       console.log("story published successfully");
+
+
 
       if (selectedCategory) {
         if (
@@ -358,8 +387,28 @@ export default function Story() {
         clear();
       }
 
-      // added the toast notification for the story published
+      // updating the story count for the published category
       
+      const updatedCounts = { ...storyCounts };
+    if (updatedCounts[selectedCategory]) {
+      // If the category already exists, increment the count
+      updatedCounts[selectedCategory]++;
+    } else {
+      // If the category doesn't exist, add it with count 1
+      updatedCounts[selectedCategory] = 1;
+    }
+
+    // Update the storyCount node in the database
+    update(ref(database, "StoryCount"), updatedCounts)
+      .then(() => {
+        console.log("Story count updated successfully");
+      })
+      .catch((error) => {
+        console.error("Error updating story count:", error);
+      });
+
+
+
 
       // navigate to the selected/published category
       navigate(`/${selectedCategory.toLowerCase()}`);

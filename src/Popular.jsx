@@ -4,23 +4,39 @@ import { useState } from "react";
 import {
   ref,
   get,
+  onValue,
 } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
 import { database } from "./Story";
 import { toast } from "react-toastify";
 import { List } from "./Story";
+import { storyCount } from "./Story";
 
 export default function Popular({ onChildValue }) {
   const [sortedDisplayTopics, setSortedDisplayTopics] = useState([]);
-  // const [popularTopics, setPopularTopics] = useState([
-  //   "TRAVELLING",
-  //   "BANGALORE STORIES",
-  //   "GOA DIARIES",
-  //   "NITK STUFFS",
-  //   "IIM THINGS",
-  //   "IIMB FACTS",
-  //   "SHAYARI",
-  //   "VIKAS MEENA",
-  // ]);
+  const [storyCounts, setStoryCounts] = useState({});
+
+  useEffect(() => {
+    const storyCountRef = ref(database, "StoryCount");
+
+    onValue(storyCountRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        console.log(`data`, data);
+        // Update the state with the fetched storyCounts
+        setStoryCounts(data);
+      } else {
+        console.log("No data available");
+      }
+    });
+
+    // Clean up the listener when the component unmounts
+    return () => {
+      // Detach the listener
+      onValue(storyCountRef, null);
+    };
+  }, []);
+
+ 
 
 
 
@@ -54,50 +70,7 @@ export default function Popular({ onChildValue }) {
 
 
 
-  // get popular topics
-
-
-
-  // useEffect(() => {
-  //   const popularCat = async () => {
-  //     try {
-  //       const snapshot = await get(ref(database, `List`));
-  //       if (snapshot.exists()) {
-  //         const categoryData = snapshot.val();
-  //         const categoryArray = Object.entries(categoryData);
-
-  //         // Sort categories by number of stories in descending order
-  //         categoryArray.sort(
-  //           ([, a], [, b]) => Object.keys(b).length - Object.keys(a).length
-  //         );
-
-  //         // Extract the names of the first 10 categories
-  //         const top10Categories = categoryArray
-  //           .slice(0, 10)
-  //           .map(([categoryName]) => categoryName);
-
-  //         console.log("Top 10 Categories:", top10Categories);
-
-  //         // Set the state or perform any further actions with the top 10 categories
-  //         setPopularTopics(top10Categories);
-  //       } else {
-  //         console.log("No data available");
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //       throw error;
-  //     }
-  //   };
-
-  //   popularCat();
-  // }, []);
-
-
-
-
-
-
-  // Get the saved actions from localStorage
+ 
   const savedCategory = JSON.parse(localStorage.getItem("starClicked")) || {};
 
   // Filter out favourite and non-favourite topics based on starClicked by user
