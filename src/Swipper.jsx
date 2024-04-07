@@ -20,8 +20,8 @@ const Swipper = () => {
         <Swiper
       spaceBetween={50}
       slidesPerView={3}
-      onSlideChange={() => console.log('slide change')}
-      onSwiper={(swiper) => console.log(swiper)}
+      onSlideChange={() => {}}
+      onSwiper={(swiper) => {}}
     >
       <SwiperSlide>Slide 1</SwiperSlide>
       <SwiperSlide>Slide 2</SwiperSlide>

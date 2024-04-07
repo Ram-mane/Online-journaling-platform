@@ -20,7 +20,7 @@ import {
   ref,
   push,
   update,
-  onValue, 
+  onValue,
   get,
 } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
 import { Card, CardBody, CardHeader, Container } from "reactstrap";
@@ -30,7 +30,7 @@ import LatestStories from "./LatestStories";
 
 const appSetting = {
   databaseURL:
-  "https://lean-platform-project-default-rtdb.asia-southeast1.firebasedatabase.app/",
+    "https://lean-platform-project-default-rtdb.asia-southeast1.firebasedatabase.app/",
 };
 
 export const app = initializeApp(appSetting);
@@ -65,6 +65,7 @@ export default function Story() {
   // initiliazed the search state with the category from the url
   const [search, setSearch] = useState(category ? category.toUpperCase() : "");
   const [searchResults2, setSearchResults2] = useState([]);
+  const [currentCategory, setCurrentCategory] = useState(null);
 
   const [categories, setCategories] = useState([]);
   const [newCat, setNewCat] = useState([]);
@@ -95,26 +96,26 @@ export default function Story() {
   const [categoryParam, setCategoryParam] = useState(category ? category : "");
   const [copySuccess, setCopySuccess] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [readCatOn, setReadCatOn] = useState(category ? category : "");
 
   const [storyCounts, setStoryCounts] = useState({});
 
-// story count ref
+  // story count ref
   useEffect(() => {
-
     onValue(storyCount, (snapshot) => {
       if (snapshot.exists()) {
         const data = snapshot.val();
         // Update the state with the fetched storyCounts
         setStoryCounts(data);
       } else {
-        console.log("No data available");
+        console.error("No data available");
       }
     });
 
     // Clean up the listener when the component unmounts
     return () => {
       // Detach the listener
-      onValue(storyCountRef, null);
+      onValue(storyCount, null);
     };
   }, []);
 
@@ -129,7 +130,6 @@ export default function Story() {
     const categoryURL = category
       ? `${window.location.origin}/${category}`
       : `${window.location.origin}/`;
-    console.log("categoryURL : " + categoryURL);
     navigator.clipboard.writeText(categoryURL);
     // setShowPopup(true);
     {
@@ -162,26 +162,25 @@ export default function Story() {
           <CardBody className="popup-link">
             <a href={categoryURL} target="_blank" rel="noopener noreferrer">
               {categoryURL}
-              
             </a>
             <button className="copy-btn" onClick={handleCopyUrl}>
-           
-            <img src={ "https://www.svgrepo.com/show/524469/copy.svg"} 
-                        alt="copy image" style={{width: "20px", cursor: "pointer"}}
-                         />
-          </button>
+              <img
+                src={"https://www.svgrepo.com/show/524469/copy.svg"}
+                alt="copy image"
+                style={{ width: "20px", cursor: "pointer" }}
+              />
+            </button>
           </CardBody>
-          
+
           <button className="close-button" onClick={onClose}>
-					<img src="https://www.svgrepo.com/show/522506/close.svg" alt="close button" width="20px" />
-				</button>
-          
-          
+            <img
+              src="https://www.svgrepo.com/show/522506/close.svg"
+              alt="close button"
+              width="20px"
+            />
+          </button>
         </Card>
       </div>
-
-
-    
     );
   };
 
@@ -189,12 +188,6 @@ export default function Story() {
   const closePopup = () => {
     setShowPopup(false);
   };
-
-
-
-
-
-
 
   // Retrieve the user's previous actions from localStorage
   const savedActions = JSON.parse(localStorage.getItem("starClicked")) || {};
@@ -257,6 +250,7 @@ export default function Story() {
 
       // if url contains category then set the displaying to category else set to random category
       category ? setCheck(category) : setCheck(randomCat[random]);
+      category ? setReadCatOn(category) : setReadCatOn(randomCat[random]);
     }
   }, [randomCat]);
 
@@ -293,6 +287,7 @@ export default function Story() {
 
   function handleSearch2(e) {
     setSearch(e.target.value);
+    setCurrentCategory(null);
     setMenu(false);
     setShow3(true);
 
@@ -311,6 +306,7 @@ export default function Story() {
   function handleCategorySelect2(category) {
     setCategoryParam(category);
     setSearch(category);
+    setCurrentCategory(null);
     setSelectedValue("");
     setSearchResults2([]);
     searchBar(category);
@@ -318,7 +314,6 @@ export default function Story() {
 
     // get the saved actions from localStorage
     const savedActions = JSON.parse(localStorage.getItem("starClicked")) || {};
-    console.log(savedActions);
 
     // Set the initial state based on the saved actions
     const initialStarClicked = savedActions[category] || false;
@@ -356,7 +351,6 @@ export default function Story() {
   }
 
   function handleSubmit(e) {
-
     const random = Math.random() * 4;
     e.preventDefault();
     const Data = {
@@ -371,9 +365,6 @@ export default function Story() {
       push(ref(database, `List/${selectedCategory}`), Data);
 
       toast.success("Story published successfully");
-      console.log("story published successfully");
-
-
 
       if (selectedCategory) {
         if (
@@ -388,31 +379,28 @@ export default function Story() {
       }
 
       // updating the story count for the published category
-      
+
       const updatedCounts = { ...storyCounts };
-    if (updatedCounts[selectedCategory]) {
-      // If the category already exists, increment the count
-      updatedCounts[selectedCategory]++;
-    } else {
-      // If the category doesn't exist, add it with count 1
-      updatedCounts[selectedCategory] = 1;
-    }
+      if (updatedCounts[selectedCategory]) {
+        // If the category already exists, increment the count
+        updatedCounts[selectedCategory]++;
+      } else {
+        // If the category doesn't exist, add it with count 1
+        updatedCounts[selectedCategory] = 1;
+      }
 
-    // Update the storyCount node in the database
-    update(ref(database, "StoryCount"), updatedCounts)
-      .then(() => {
-        console.log("Story count updated successfully");
-      })
-      .catch((error) => {
-        console.error("Error updating story count:", error);
-      });
-
-
-
+      // Update the storyCount node in the database
+      update(ref(database, "StoryCount"), updatedCounts)
+        .then(() => {})
+        .catch((error) => {
+          console.error("Error updating story count:", error);
+        });
 
       // navigate to the selected/published category
-      navigate(`/${selectedCategory.toLowerCase()}`);
-      window.location.reload();
+      setTimeout(() => {
+        navigate(`/${selectedCategory.toLowerCase()}`);
+        window.location.reload();
+      }, 2000);
     }
 
     // setContent(false)
@@ -437,7 +425,6 @@ export default function Story() {
       ) {
         setCategories((prevCategories) => [...prevCategories, searchText]);
         initialCategories.push(searchText.toUpperCase());
-        console.log("initial cat" + initialCategories);
       }
     }
   }
@@ -471,7 +458,7 @@ export default function Story() {
   }, []);
 
   useEffect(() => {
-    windowWidth > 425 ? setContent(true) : setContent(false);
+    windowWidth > 435 ? setContent(true) : setContent(false);
   }, [windowWidth]);
 
   function handleflip() {
@@ -484,7 +471,6 @@ export default function Story() {
 
     // navigate to the selected category from the popular topics
     navigate(`/${value.toLowerCase()}`);
-    console.log("child val" + value);
     setSearch("");
     window.location.reload();
   }
@@ -520,16 +506,18 @@ export default function Story() {
   }
 
   useEffect(() => {
-    if (windowWidth > 425) {
+    if (windowWidth > 435) {
       setReveal({});
-    } else if (windowWidth <= 425) {
+    } else if (windowWidth <= 428) {
       setShow4(false);
       setShow(false);
     }
   }, [windowWidth]);
 
   function togglePara(itemId) {
-    windowWidth > 425
+    console.log("Read more...", expandedSections);
+
+    windowWidth > 435
       ? setExpandedSections((prevExpandedSections) => ({
           ...prevExpandedSections,
           [itemId]: !prevExpandedSections[itemId],
@@ -542,13 +530,14 @@ export default function Story() {
 
   const revealMain = {
     position: "absolute",
-    border: "2px solid red",
-    top: "0px",
-    left: windowWidth > 375 ? "-75px" : windowWidth > 320 ? "-90px" : "-80px",
+    top: "10px",
+    left: windowWidth > 375 ? "-15%" : windowWidth > 320 ? "-39%" : "-20px",
     width: windowWidth > 320 ? "283px" : "250px",
-    height: "257px",
+    height: "287px",
     boxShadow: "1px 1px 0px #000000",
   };
+
+  
 
   const revealhead = {
     alignSelf: "center",
@@ -568,7 +557,6 @@ export default function Story() {
     setReveal({});
   }
 
-  console.log('mappable initial ', mappable)
   useEffect(() => {
     if (selectedValue) {
       onValue(
@@ -619,60 +607,83 @@ export default function Story() {
     setContent((prev) => !prev);
   }
 
-  function paragraph(item){
-
-    if(item){
-      const words = item[1].split(' ')
-      const isExpanded = expandedSections[item[2]]
-      const isRevealed = reveal[item[2]]
-  
+  function paragraph(item) {
+    if (item) {
+      const words = item[1].split(" ");
+      const isExpanded = expandedSections[item[2]];
+      const isRevealed = reveal[item[2]];
       if (words.length > 24 && !isExpanded) {
         return (
-          <div className='item-section' key={item[2]} style={isRevealed ? revealMain : {}}>
-            <div className='item-category'>
+          <div
+            className="item-section"
+            key={item[2]}
+            style={isRevealed ? revealMain : {}}
+          >
+            <div className="item-category">
               <h3>{item[0]}</h3>
               <p>{formattedDate(item[4])}</p>
             </div>
-            {isRevealed && <BsArrowLeft className='left-arrow' onClick={goback}/>}
+            {isRevealed && (
+              <BsArrowLeft className="left-arrow" onClick={goback} />
+            )}
             <h2 style={isRevealed ? revealhead : {}}>{item[3]}</h2>
-            <div className='show-para'>
-              {isRevealed ? <p style={isRevealed ? revealPara : {}}>{item[1].slice(0, item[1].length)}...</p> : 
-              <p>{item[1].slice(0, 154)}...</p>}
+            <div className="show-para">
+              {isRevealed ? (
+                <p style={isRevealed ? revealPara : {}}>
+                  {item[1].slice(0, item[1].length)}...
+                </p>
+              ) : (
+                <p>{item[1].slice(0, 154)}...</p>
+              )}
             </div>
-              {windowWidth > 425 ? <span className='read-more' onClick={() => togglePara([item[2]])}>
+            {windowWidth > 435 ? (
+              <span className="read-more" onClick={() => togglePara([item[2]])}>
                 Read more...
-              </span> :
-
-              !isRevealed && <span className='read-more' onClick={() => togglePara([item[2]])}>
-              Read more...
-            </span>}
+              </span>
+            ) : (
+              !isRevealed && (
+                <span
+                  className="read-more"
+                  onClick={() => togglePara([item[2]])}
+                >
+                  Read more...
+                </span>
+              )
+            )}
           </div>
-        )
-      }
-  
-      else{
+        );
+      } else {
         return (
-          <div className='item-section' key={item[2]} style={isRevealed ? revealMain : {}}>
-            <div className='item-category'>
+          <div
+            className="item-section"
+            key={item[2]}
+            style={isRevealed ? revealMain : {}}
+          >
+            <div className="item-category">
               <h3>{item[0]}</h3>
               <p>{formattedDate(item[4])}</p>
             </div>
-            {isRevealed && <BsArrowLeft className='left-arrow' onClick={goback}/>}
+            {isRevealed && (
+              <BsArrowLeft className="left-arrow" onClick={goback} />
+            )}
             <h2 style={isRevealed ? revealhead : {}}>{item[3]}</h2>
-            <div className='show-para'>
+            <div className="show-para">
               <p style={isRevealed ? revealPara : {}}>{item[1]}</p>
             </div>
-              {words.length > 24 && windowWidth > 425 ? (
-                <span className='read-more' onClick={() => togglePara(item[2])}>
-                  Read less
+            {words.length > 24 && windowWidth > 435 ? (
+              <span className="read-more" onClick={() => togglePara(item[2])}>
+                Read less
+              </span>
+            ) : (
+              words.length > 24 &&
+              !isRevealed && (
+                <span className="read-more" onClick={() => togglePara(item[2])}>
+                  Read more...
                 </span>
-              ) :
-
-             (words.length > 24 && !isRevealed) && <span className='read-more' onClick={() => togglePara(item[2])}>
-              Read more...
-            </span>}
+              )
+            )}
           </div>
-        )
+        );
       }
     }
   }
@@ -711,9 +722,37 @@ export default function Story() {
     });
   }
 
+  function handlelatestStories(story) {
+    setMappable([story]);
+    const currentCategory = story[1]?.category;
+    const itemId = story[1]?.id;
+    setReadCatOn(currentCategory);
+    setCurrentCategory(currentCategory);
+
+    const newExpandedSections = {};
+    newExpandedSections[itemId] = true;
+    setExpandedSections(newExpandedSections);
+
+    // setExpandedSections((prevExpandedSections) => ({
+    //   ...prevExpandedSections,
+    //   [itemId]: !prevExpandedSections[itemId],
+    // }))
+    
+  }
+
   return (
     <div className="flex">
       <Popular onChildValue={handleChildValue} />
+      {windowWidth < 455 && (
+        <div
+          style={{
+            height: "1.57px",
+            marginTop: "10px",
+            backgroundColor: "#3c3c3c",
+            width: "100%",
+          }}
+        ></div>
+      )}
       <div className="story-section ">
         <form className="section-1">
           <div className="section-1-head">
@@ -730,7 +769,7 @@ export default function Story() {
                   id="subject"
                   name="subject"
                   type="text"
-                  placeholder="Write your thoughts... "
+                  placeholder="Give a topic to your thoughts/story "
                   value={subject}
                   onChange={(e) => handleValue(e)}
                   required
@@ -804,16 +843,14 @@ export default function Story() {
                     )}
                   </div>
                 )}
-                 <button
-                type="submit"
-                className="submit-btn"
-                onClick={handleSubmit}
-              >
-                PUBLISH YOUR STORY
-              </button>
+                <button
+                  type="submit"
+                  className="submit-btn"
+                  onClick={handleSubmit}
+                >
+                  PUBLISH YOUR STORY
+                </button>
               </div>
-
-             
             </div>
           )}
         </form>
@@ -824,7 +861,22 @@ export default function Story() {
           <section className="section-2">
             <div className="section-2-head">
               {/* updated the story section */}
-              <h1>Read stories</h1>
+              <h1>
+                Read stories on{" "}
+                <div
+                  style={{
+                    height: "2px",
+                    width: "55%",
+                    background: "#6b5027",
+                  }}
+                ></div>
+                <span style={{ display: "block" }}>
+                  “
+                  {readCatOn[0]?.toUpperCase() +
+                    readCatOn?.slice(1).toLowerCase()}
+                  ”
+                </span>
+              </h1>
 
               <div className="looking">
                 <div className="choose" ref={dropdownRef}>
@@ -834,15 +886,15 @@ export default function Story() {
                   <input
                     type="text"
                     id="choose"
-                    placeholder="Browse a Category"
-                    value={search}
+                    placeholder="Browse a category"
+                    value={currentCategory || search}
+                    style={{ textDecoration: "none" }}
                     onClick={handleClick}
                     onBlur={() => handleClick2()}
                     onChange={handleSearch2}
                     required
                   />
                   <BiChevronDown className="btn-2" onClick={handleClick2} />
-                  
 
                   {/*  changed the position of the sort  */}
                   <div className="container-fluid">
@@ -855,11 +907,21 @@ export default function Story() {
                             color={isStarClicked ? "yellow" : "grey"}
                             onClick={handleStarClick}
                           /> */}
-                          <div className='star-icon' style={{width: "20px", marginRight:'15px'}} onClick={handleStarClick}>
-                  <img src={isStarClicked ? "https://www.svgrepo.com/show/513354/star.svg" : "https://www.svgrepo.com/show/501365/star-light.svg"}
-                   alt="star icon"
-                   width={20} />
-                </div>
+                          <div
+                            className="star-icon"
+                            style={{ width: "20px", marginRight: "15px" }}
+                            onClick={handleStarClick}
+                          >
+                            <img
+                              src={
+                                isStarClicked
+                                  ? "https://www.svgrepo.com/show/513354/star.svg"
+                                  : "https://www.svgrepo.com/show/501365/star-light.svg"
+                              }
+                              alt="star icon"
+                              width={20}
+                            />
+                          </div>
                         </div>
 
                         {/*added  share icon from the react-icons */}
@@ -870,11 +932,21 @@ export default function Story() {
                             onClick={handleOpenPopup}
                           /> */}
                           {/* Share Popup */}
-                          <div className='share-btn' style={{width: "20px" ,  marginRight:'20px'}} onClick={handleOpenPopup}>
-                    <img src={ showPopup ? "https://www.svgrepo.com/show/460077/share-alt.svg" : "https://www.svgrepo.com/show/521832/share-1.svg"} 
-                    
-                      alt="share button img" style={{width: "100%"}} />
-                </div>
+                          <div
+                            className="share-btn"
+                            style={{ width: "20px", marginRight: "20px" }}
+                            onClick={handleOpenPopup}
+                          >
+                            <img
+                              src={
+                                showPopup
+                                  ? "https://www.svgrepo.com/show/460077/share-alt.svg"
+                                  : "https://www.svgrepo.com/show/521832/share-1.svg"
+                              }
+                              alt="share button img"
+                              style={{ width: "100%" }}
+                            />
+                          </div>
                           {showPopup && SharePopup(categoryURL, closePopup)}
                         </div>
 
@@ -935,7 +1007,9 @@ export default function Story() {
             <div className="filter">
               <h1 className="total-story">
                 <span>
-                  {stories === 1
+                  {currentCategory
+                    ? `${mappable?.length} Story`
+                    : stories === 1
                     ? `${stories} story`
                     : stories === 0
                     ? `0 story`
@@ -945,8 +1019,9 @@ export default function Story() {
               </h1>
             </div>
 
-            <section className="section-3"><LatestStories/></section>
-
+            <section className="section-3">
+              <LatestStories handlelatestStories={handlelatestStories} />
+            </section>
 
             {windowWidth > 435 ? (
               <div>
@@ -983,64 +1058,58 @@ export default function Story() {
             ) : (
               <div className="container-fluid">
                 <section className="item-section-main">
-                <Swiper 
-                  effect="coverflow"
-                  // grabCursor='true'
-                  centeredSlides='true'
-                  slidesPerView={3}
-                  coverflowEffect={{
-                    rotate: 0,
-                    stretch: 0,
-                    depth: 200,
-                    modifier: 1,
-                    slideShadows: false,
-                  }}
-                  // onSwiper={handleSwiperInit}
-                  // onSlideChange={handleSlideChange}
-                >
+                  <Swiper
+                    effect="coverflow"
+                    // grabCursor='true'
+                    centeredSlides="true"
+                    slidesPerView={3}
+                    coverflowEffect={{
+                      rotate: 0,
+                      stretch: 0,
+                      depth: 100,
+                      modifier: 1,
+                      slideShadows: false,
+                    }}
+                    // onSwiper={handleSwiperInit}
+                    // onSlideChange={handleSlideChange}
+                  >
                     {/* <div className="swiper-wrapper" > */}
-                      {(() => {
-                        const sortedMappable = mappable.sort((a, b) => {
-                          const dateA = new Date(
-                            formattedDate2(Object.values(a[1])[4])
-                          );
-                          const dateB = new Date(
-                            formattedDate2(Object.values(b[1])[4])
-                          );
+                    {(() => {
+                      const sortedMappable = mappable.sort((a, b) => {
+                        const dateA = new Date(
+                          formattedDate2(Object.values(a[1])[4])
+                        );
+                        const dateB = new Date(
+                          formattedDate2(Object.values(b[1])[4])
+                        );
 
-                          if (dateA < dateB) {
-                            return flipped ? 1 : -1;
-                          }
+                        if (dateA < dateB) {
+                          return flipped ? 1 : -1;
+                        }
 
-                          if (dateA > dateB) {
-                            return flipped ? -1 : 1;
-                          }
+                        if (dateA > dateB) {
+                          return flipped ? -1 : 1;
+                        }
 
-                          const timeA = formattedTime(Object.values(a[1])[4]);
-                          const timeB = formattedTime(Object.values(b[1])[4]);
+                        const timeA = formattedTime(Object.values(a[1])[4]);
+                        const timeB = formattedTime(Object.values(b[1])[4]);
 
-                          if (timeA < timeB) {
-                            return flipped ? 1 : -1;
-                          }
-                          if (timeA > timeB) {
-                            return flipped ? -1 : 1;
-                          }
-                        });
-                          console.log('sortedMappable', sortedMappable)
-                        return sortedMappable.map((items, index) => {
-                          const random = Math.random() * 4;
-                          console.log('items in mapp ', items)
-                          return (
-                            <SwiperSlide key={random} className="swiper-slide">
-
-                              {
-                              paragraph(Object.values(items[1]))
-                              
-                              }
-                            </SwiperSlide>
-                          );
-                        });
-                      })()}
+                        if (timeA < timeB) {
+                          return flipped ? 1 : -1;
+                        }
+                        if (timeA > timeB) {
+                          return flipped ? -1 : 1;
+                        }
+                      });
+                      return sortedMappable.map((items, index) => {
+                        const random = Math.random() * 4;
+                        return (
+                          <SwiperSlide key={random} className="swiper-slide">
+                            {paragraph(Object.values(items[1]))}
+                          </SwiperSlide>
+                        );
+                      });
+                    })()}
                     {/* </div> */}
                   </Swiper>
                 </section>
@@ -1049,8 +1118,6 @@ export default function Story() {
           </section>
         </div>
       </div>
-     
     </div>
-    
   );
 }

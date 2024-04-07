@@ -1,19 +1,45 @@
 .container-latest {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items:flex-start;
     width: 350px;
     height: 100vh; /* Adjust as needed */
     margin-bottom: 50px;
-    padding: 20px;
     color: #000;
-    border: 1px solid #000;
-    border-radius: 10px;
+    border-left: 2px solid #000;
     position: fixed;
     right: 0;
     margin-top: 5px;
 }
+
+
+
+.container-latest >h3 {
+    font-size: 1.4rem;
+    /* font-weight: 500; */
+    margin: 5px;
+    font-family: var(--ff-lancelot);
+    padding: 3px;
+    /* color: rgba(6, 3, 3, 0.916); */
+    background-color: transparent;
+    border-radius: 10px;
+}
+
+.container-latest > h3::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: #6b5027;
+    margin-top: 5px;
+}
+
+/* 
+h4{
+    margin-top: -5% !important;
+} */
+
 
 
 .latest-stories {
@@ -21,18 +47,19 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: self-end;
-    width: 95%;
-    height: 200px;
+    width: 105%;
+    /* height: 200px; */
     margin-bottom: 5px;
     padding: 20px;
     color: rgba(6, 3, 3, 0.916);
     border-radius: 10px;
     flex-wrap: wrap;
-    position: absolute;
-    top: -30px;
+    position: relative;
+    top: -20px;
+    left: -5%;
 }
 
-@media screen and (max-width: 1450px) {
+@media screen and (max-width: 1430px) {
     .container-latest {
         display: none;
     }
@@ -44,19 +71,19 @@
 .latest-stories-container {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start; /* Align items to the start of the flex container */
-    align-items: flex-start; /* Align items to the start of each line */
-    width: 320px; /* Occupy the full width of the container */
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
     height: auto;
     margin-bottom: 5px;
-    padding: 0px;
+    padding: 5px;
     color: rgba(6, 3, 3, 0.916);
     border-radius: 10px;
-    flex-wrap: wrap; /* Allow items to wrap onto multiple lines */
-    position: fixed;
-    top: 350px;
-    overflow-y: auto; /* Make the container vertically scrollable */
-    max-height: 460px; /* Set a maximum height for the container */
+    flex-wrap: wrap;
+    position: relative;
+    top: 0px;
+    overflow-y: auto;
+    max-height: 400px;
 }
 
 .latest-stories >.cat-name {
@@ -64,10 +91,9 @@
     font-weight: 300;
     margin: 5px;
     padding: 3px;
-    border: 1px solid #060606;
+    border: 1.92853px solid #6b5023;
     color: rgba(6, 3, 3, 0.916);
     background-color: transparent;
-    border-radius: 10px;
     transition: background-color 0.3s ease;
   }
   
@@ -87,6 +113,11 @@
     text-decoration: none;
     color: rgba(6, 3, 3, 0.916);
     cursor: pointer;
+    font-family: var(--ff-lato);
+    line-height: 18px;
+    font-weight: 600;
+    font-size: 0.6875rem;
+    padding: 9.64264px 8px;
 }
 
  .cat-name > span:hover{
@@ -96,13 +127,7 @@
 
 
 
- h3 {
-    padding: 10px;
-    margin-right: 50px !important;
-    display: flex;
-    justify-content: center;
-    margin-right: 50px;
-}
+ 
 
 .latest-stories > h4{
     padding: 0;
@@ -110,21 +135,23 @@
     font-weight: 500;
 }
 
- .story-container{
-    font-size: 0.8rem;
+.story-container {
+    font-size: 1rem;
     font-weight: 200 !important;
-    margin: 5px; /* Add margin around each item for spacing */
     padding: 3px;
-    height: auto;
-    width: 280px;
-    border: 1px solid rgba(6, 3, 3, 0.916)!important;
+    width: 300px;
+    border-bottom: 1px solid rgba(6, 3, 3, 0.916) !important;
     color: rgba(6, 3, 3, 0.916);
     background-color: transparent;
-    border-radius: 10px;
-    overflow-y: auto; /* Make the container vertically scrollable */
-    max-height: 200px; /* Set a maximum height for the container */
-
+    overflow: hidden;
+    display: -webkit-box; /* Required for Safari */
+    -webkit-line-clamp: 3; /* Limit to 3 lines */
+    -webkit-box-orient: vertical; /* Required for Safari */
+    cursor: pointer;
+    margin-bottom: 8px;
 }
+
+
 h4 {
     display: block;
     margin-block-start: 1.33em;
@@ -141,10 +168,20 @@ h4 {
 
    
 
-    .latest-stories-container {
+    /* .latest-stories-container {
         top: 350px;
         max-height: 400px;
-    }
+    } */
 
+    
+}
+
+@media  screen and (width:1440px) {
+     .container-latest{
+        width: 280px;
+    }
+   
+
+   
     
 }

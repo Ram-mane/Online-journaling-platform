@@ -21,11 +21,10 @@ export default function Popular({ onChildValue }) {
     onValue(storyCountRef, (snapshot) => {
       if (snapshot.exists()) {
         const data = snapshot.val();
-        console.log(`data`, data);
         // Update the state with the fetched storyCounts
         setStoryCounts(data);
       } else {
-        console.log("No data available");
+        console.error("No data available");
       }
     });
 
@@ -85,7 +84,7 @@ export default function Popular({ onChildValue }) {
   // Set to store topics to display the sorted list of topics based on favourite and popular
   // Using a Set to avoid duplication
   const displayTopicsSet = new Set([...favouriteTopics]);
-  // console.log(displayTopicsSet.values());
+
 
   // Calculate the number of remaining slots as we have to display 10 topics in the list
   var remainingSlots = 8 - displayTopicsSet.size;
@@ -93,7 +92,6 @@ export default function Popular({ onChildValue }) {
   // Loop to fill remaining slots with popular topics
   for (var i = 0; i < remainingSlots && i < popularTopics.length; i++) {
     displayTopicsSet.add(popularTopics[i]);
-    // console.log(displayTopicsSet.values());
   }
 
   // Convert Set back to Array if needed
@@ -101,7 +99,6 @@ export default function Popular({ onChildValue }) {
   
   // Function to fetch the number of stories in each category
   const noOfStoriesInEachCategory = async (category) => {
-    console.log(`category`, category);
     try {
 
       
@@ -114,7 +111,6 @@ export default function Popular({ onChildValue }) {
 
       if (snapshot.exists()) {
         const noOfStories = Object.entries(snapshot.val()).length;
-        console.log(`no of stories`, noOfStories);
         return noOfStories;
       } else {
         return 0;
@@ -128,11 +124,9 @@ export default function Popular({ onChildValue }) {
   // Using Promise.all to fetch the number of stories for each category concurrently
   const fetchStoriesPromises = displayTopics.map((cat) =>
     noOfStoriesInEachCategory(cat),
-    // console.log(`no of stories`, noOfStoriesInEachCategory(cat))
 
   );
 
-  console.log('featch cat : ',fetchStoriesPromises);
 
   useEffect(() => {
     Promise.all(fetchStoriesPromises)
@@ -142,7 +136,6 @@ export default function Popular({ onChildValue }) {
           category,
           storyCount: noOfStoriesArray[index],
         }));
-        console.log(`categoryStoryCounts`, categoryStoryCounts);
 
         // Sort the array based on story counts in descending order
         categoryStoryCounts.sort((a, b) => b.storyCount - a.storyCount);
@@ -162,7 +155,7 @@ export default function Popular({ onChildValue }) {
     <div className="popular">
       {/* Display  header based on whether there are favourite topics or popular topics*/}
       <h1>
-        {favouriteTopics.length > 0 ? "Favourite Topics" : "Popular Topics"}
+        {favouriteTopics.length > 0 ? "Categories for you" : "Popular Categories"}
       </h1>
       <div className="list">
         <ul className="list-items">

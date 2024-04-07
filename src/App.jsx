@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './Navbar';
 import Story from './Story';
 import './App.css';
+import StoryInfo from './components/StoryInfo';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           
           {/* Route for category pages */}
           <Route path="/:category" element={<Story/>} />
+          <Route path="/:category/:story" element={<Story />} />
 {/* hi this is venom */}
         </Routes>
         
