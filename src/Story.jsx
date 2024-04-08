@@ -29,8 +29,8 @@ import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import LatestStories from "./LatestStories";
 
 const appSetting = {
-  databaseURL:
-    "https://lean-platform-project-default-rtdb.asia-southeast1.firebasedatabase.app/",
+  databaseURL: "https://sysu-ad161-default-rtdb.asia-southeast1.firebasedatabase.app/"
+
 };
 
 export const app = initializeApp(appSetting);
