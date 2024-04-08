@@ -534,7 +534,7 @@ export default function Story() {
   const revealMain = {
     position: "absolute",
     top: "10px",
-    left: windowWidth > 375 ? "-15%" : windowWidth > 320 ? "-39%" : "-20px",
+    left: windowWidth > 375 ? "-35%" : windowWidth > 320 ? "-39%" : "-20px",
     width: windowWidth > 320 ? "283px" : "250px",
     height: "287px",
     boxShadow: "1px 1px 0px #000000",
