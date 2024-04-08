@@ -113,13 +113,10 @@ const LatestStories = ({ handlelatestStories }) => {
   };
   const handleDescClicked = (catClicked) => {
     let lowercaseCatClicked = catClicked?.[1]?.category?.toLowerCase();
-    if (lowercaseCatClicked.includes(" ")) {
-      lowercaseCatClicked = lowercaseCatClicked.replace(" ", "-");
-    }
+   
 
     let subject = catClicked?.[1]?.subject?.toLowerCase();
 
-    subject = subject.replace(" ", "-");
 
     handlelatestStories(catClicked);
     navigate(`/${lowercaseCatClicked}`);

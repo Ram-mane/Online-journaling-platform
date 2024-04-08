@@ -84,18 +84,22 @@ export default function Popular({ onChildValue }) {
   // Set to store topics to display the sorted list of topics based on favourite and popular
   // Using a Set to avoid duplication
   const displayTopicsSet = new Set([...favouriteTopics]);
+  console.log('dispaly topiic set', displayTopicsSet);
 
 
   // Calculate the number of remaining slots as we have to display 10 topics in the list
-  var remainingSlots = 8 - displayTopicsSet.size;
+  var remainingSlots = 7 - displayTopicsSet.size;
+  console.log('remaining slot ', remainingSlots)
 
   // Loop to fill remaining slots with popular topics
   for (var i = 0; i < remainingSlots && i < popularTopics.length; i++) {
     displayTopicsSet.add(popularTopics[i]);
   }
 
+  console.log('added display topic set', displayTopicsSet);
   // Convert Set back to Array if needed
   const displayTopics = Array.from(displayTopicsSet);
+   console.log('display topics ', displayTopics);
   
   // Function to fetch the number of stories in each category
   const noOfStoriesInEachCategory = async (category) => {
@@ -122,7 +126,7 @@ export default function Popular({ onChildValue }) {
   };
 
   // Using Promise.all to fetch the number of stories for each category concurrently
-  const fetchStoriesPromises = displayTopics.map((cat) =>
+  const fetchStoriesPromises = favouriteTopics.map((cat) =>
     noOfStoriesInEachCategory(cat),
 
   );
@@ -132,7 +136,7 @@ export default function Popular({ onChildValue }) {
     Promise.all(fetchStoriesPromises)
       .then((noOfStoriesArray) => {
         // Combine categories and their corresponding story counts into an array of objects
-        const categoryStoryCounts = displayTopics.map((category, index) => ({
+        const categoryStoryCounts = favouriteTopics.map((category, index) => ({
           category,
           storyCount: noOfStoriesArray[index],
         }));
@@ -145,11 +149,26 @@ export default function Popular({ onChildValue }) {
           (item) => item.category
         );
         setSortedDisplayTopics(sortedDisplayTopics);
+        console.log('display topics ', displayTopics);
+        console.log('sorted display topic', sortedDisplayTopics)
       })
       .catch((error) => {
         toast.error("Error fetching data" + error);
       });
   }, [localStorage.getItem("starClicked")]);
+
+  const remaining = 6 - sortedDisplayTopics.length;
+  let pushedCount = 0;
+  
+  for (let i = 0; pushedCount < remaining && i < popularTopics.length; i++) {
+      const popularTopic = popularTopics[i];
+      if (!sortedDisplayTopics.includes(popularTopic)) {
+          sortedDisplayTopics.push(popularTopic);
+          pushedCount++; // Increment pushedCount only when a topic is pushed
+      }
+  }
+  
+
 
   return (
     <div className="popular">
@@ -161,8 +180,8 @@ export default function Popular({ onChildValue }) {
         <ul className="list-items">
           {/* Render the  list of topics */}
           {favouriteTopics.length > 0
-            ? sortedDisplayTopics.map((topic) => (
-                <ListItem key={topic} value={topic} />
+            ? sortedDisplayTopics.map((topic, index) => (
+                <ListItem key={index} value={topic} />
               ))
             : popularTopics.map((topic) => (
                 <ListItem key={topic} value={topic} />

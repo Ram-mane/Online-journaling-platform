@@ -200,6 +200,9 @@ export default function Story() {
 
   // Click handler for the star icon
   const handleStarClick = () => {
+    // if(search.length()===0){
+    //   return
+    // }
     // Toggle the star's color
     setIsStarClicked((prev) => !prev);
 
@@ -1015,7 +1018,10 @@ export default function Story() {
                     ? `0 story`
                     : `${stories} stories`}
                 </span>{" "}
-                for you to read
+                {
+                  windowWidth > 438 && <div style={{display:'inline'}}>                for you to read
+                  </div>
+                }
               </h1>
             </div>
 

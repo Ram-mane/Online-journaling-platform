@@ -6,7 +6,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './Navbar';
 import Story from './Story';
 import './App.css';
-import StoryInfo from './components/StoryInfo';
 
 function App() {
   return (
