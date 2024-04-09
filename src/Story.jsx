@@ -200,11 +200,12 @@ export default function Story() {
 
   // Click handler for the star icon
   const handleStarClick = () => {
-    // if(search.length()===0){
-    //   return
-    // }
+    if(search.length===0){
+      return
+    }
     // Toggle the star's color
     setIsStarClicked((prev) => !prev);
+    console.log('search', search)
 
     // Saved the user's action locally
     localStorage.setItem(
