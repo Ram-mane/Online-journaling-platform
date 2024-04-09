@@ -60,8 +60,7 @@ export default function Popular({ onChildValue }) {
     "GOA DIARIES",
     "NITK STUFFS",
     "IIM THINGS",
-    "IIMB FACTS",
-    "SHAYARI",
+    
     "VIKAS MEENA",
   ];
 

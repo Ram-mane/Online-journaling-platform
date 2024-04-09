@@ -29,7 +29,7 @@ import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import LatestStories from "./LatestStories";
 
 const appSetting = {
-  databaseURL: "https://sysu-ad161-default-rtdb.asia-southeast1.firebasedatabase.app/"
+  databaseURL: "https://sysu-9d83f-default-rtdb.asia-southeast1.firebasedatabase.app/"
 
 };
 
