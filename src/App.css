@@ -3291,7 +3291,7 @@ textarea {
     justify-content: center;
     margin-top: 40px;
     /* margin-right: -80% !important; */
-    margin-left: 60%;
+    margin-left: 50%;
 }
   
   .list-items > li {
@@ -3510,12 +3510,12 @@ textarea {
 }
 
 .item-section {
-  width: 670px;
+  width: 580px;
 }
 
 
 .show-para > p {
-  width: 680px;
+  width: 570px;
   font-size: 0.925rem;
   line-height: 20px;
   /* margin-right: 50px !important; */
