@@ -98,12 +98,12 @@ h4{
   }
   
   .cat-name:hover {
-    background-color: #6b0736;
+    background-color: #6b5023;
     color: whi; /* Change the color to orange when hovered */
   }
   
   .cat-name:active {
-    background-color: #ff6347; /* Change the color to tomato when clicked */
+    background-color: #6b5023; /* Change the color to tomato when clicked */
   }
   
 

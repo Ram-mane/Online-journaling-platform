@@ -27,6 +27,7 @@ import { Card, CardBody, CardHeader, Container } from "reactstrap";
 import { toast } from "react-toastify";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import LatestStories from "./LatestStories";
+import Pop from "./Pop";
 
 const appSetting = {
   databaseURL: "https://sysu-9d83f-default-rtdb.asia-southeast1.firebasedatabase.app/"
@@ -76,7 +77,7 @@ export default function Story() {
   const [show3, setShow3] = useState(false);
   const [show4, setShow4] = useState(false);
   const [menu, setMenu] = useState(false);
-  const [flipped, setFlipped] = useState(false);
+  const [flipped, setFlipped] = useState(true);
   const [content, setContent] = useState(false);
 
   const [check, setCheck] = useState("");
@@ -122,14 +123,14 @@ export default function Story() {
   // used useNavigate to navigate to the selected category
   const navigate = useNavigate();
   const categoryURL = category
-    ? `${window.location.origin}/${category}`
-    : `${window.location.origin}/`;
+    ? `${window.location.origin}/${category.toLowerCase()}`
+    : `${window.location.origin}/${readCatOn.toLowerCase()}`;
 
   // handle share to generate the path url of current category
   const handleCopyUrl = () => {
     const categoryURL = category
-      ? `${window.location.origin}/${category}`
-      : `${window.location.origin}/`;
+      ? `${window.location.origin}/${category.toLowerCase()}`
+      : `${window.location.origin}/${readCatOn.toLowerCase()}`;
     navigator.clipboard.writeText(categoryURL);
     // setShowPopup(true);
     {
@@ -189,30 +190,41 @@ export default function Story() {
     setShowPopup(false);
   };
 
+
   // Retrieve the user's previous actions from localStorage
   const savedActions = JSON.parse(localStorage.getItem("starClicked")) || {};
+
+
+  // Set the initial state based on the saved actions
+  const [isStarClicked, setIsStarClicked] = useState();
+
+  useEffect(()=>{
 
   // Set the initial state based on the saved actions
   const initialStarClicked = savedActions[category?.toUpperCase()] || false;
 
   // Set the initial state based on the saved actions
-  const [isStarClicked, setIsStarClicked] = useState(initialStarClicked);
+  setIsStarClicked(initialStarClicked);
 
+
+  }, [readCatOn])
   // Click handler for the star icon
   const handleStarClick = () => {
-    if(search.length===0){
-      return
-    }
+    // if(search.length == 0){
+    //   setSearch('RAM')
+    // }
+
+    const newSearch =  readCatOn.toUpperCase();
+    console.log("Star clicked for category:", newSearch);
     // Toggle the star's color
     setIsStarClicked((prev) => !prev);
-    console.log('search', search)
 
     // Saved the user's action locally
     localStorage.setItem(
       "starClicked",
       JSON.stringify({
         ...savedActions,
-        [search]: !isStarClicked,
+        [newSearch]: !isStarClicked,
       })
     );
   };
@@ -227,6 +239,15 @@ export default function Story() {
     }
   };
 
+  // handle dropdown closing for select category arrow
+  const dropdownRef2 = useRef(null);
+  const handleClickOutside2 = (event)=>{
+    if (dropdownRef2.current && !dropdownRef2.current.contains(event.target)) {
+      // Clicked outside the dropdown, close it
+setShow(false)    
+}
+  }
+
   useEffect(() => {
     // Attached the event listener when the component mounts
     document.addEventListener("click", handleClickOutside);
@@ -234,6 +255,17 @@ export default function Story() {
     // Cleaned up the event listener when the component unmounts
     return () => {
       document.removeEventListener("click", handleClickOutside);
+    };
+    
+  }, []);
+  useEffect(() => {
+   
+    // Attached the event listener when the component mounts
+    document.addEventListener("click", handleClickOutside2);
+
+    // Cleaned up the event listener when the component unmounts
+    return () => {
+      document.removeEventListener("click", handleClickOutside2);
     };
   }, []);
 
@@ -407,6 +439,10 @@ export default function Story() {
       }, 2000);
     }
 
+    else {
+      toast.error("Please fill all the fields");
+    }
+
     // setContent(false)
   }
 
@@ -535,8 +571,8 @@ export default function Story() {
   const revealMain = {
     position: "absolute",
     top: "10px",
-    left: windowWidth > 375 ? "-35%" : windowWidth > 320 ? "-39%" : "-20px",
-    width: windowWidth > 320 ? "283px" : "250px",
+    left: windowWidth > 375 ? "-50%" : windowWidth > 320 ? "-69%" : "-49%",
+    width: windowWidth > 320 ? "265%" : "310%",
     height: "287px",
     boxShadow: "1px 1px 0px #000000",
   };
@@ -747,6 +783,7 @@ export default function Story() {
   return (
     <div className="flex">
       <Popular onChildValue={handleChildValue} />
+      {/* <Pop onChildValue={handleChildValue}/> */}
       {windowWidth < 455 && (
         <div
           style={{
@@ -795,7 +832,7 @@ export default function Story() {
               </div>
 
               <div className="selectCategory">
-                <div className="select-btn" onClick={handleShow}>
+                <div className="select-btn" onClick={handleShow} ref={dropdownRef2}>
                   {selectedCategory ? (
                     <span>{selectedCategory.toUpperCase()}</span>
                   ) : (
@@ -806,7 +843,7 @@ export default function Story() {
 
                 {show && (
                   <div className="content">
-                    <div className="search">
+                    <div className="search" >
                       <AiOutlineSearch className="search-btn" />
                       <input
                         type="text"
@@ -814,6 +851,7 @@ export default function Story() {
                         placeholder="Search"
                         value={searchText}
                         onChange={handleSearch}
+                        autoFocus
                         required
                       />
                     </div>
@@ -916,15 +954,14 @@ export default function Story() {
                             style={{ width: "20px", marginRight: "15px" }}
                             onClick={handleStarClick}
                           >
-                            <img
+                            <img className="star-icon"
                               src={
                                 isStarClicked
                                   ? "https://www.svgrepo.com/show/513354/star.svg"
                                   : "https://www.svgrepo.com/show/501365/star-light.svg"
                               }
                               alt="star icon"
-                              width={20}
-                            />
+                              style={{ width: "100%", height: "100%" }}                            />
                           </div>
                         </div>
 

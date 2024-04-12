@@ -12,46 +12,8 @@ import { List } from "./Story";
 import { storyCount } from "./Story";
 
 export default function Popular({ onChildValue }) {
-  const [sortedDisplayTopics, setSortedDisplayTopics] = useState([]);
-  const [storyCounts, setStoryCounts] = useState({});
-
-  useEffect(() => {
-    const storyCountRef = ref(database, "StoryCount");
-
-    onValue(storyCountRef, (snapshot) => {
-      if (snapshot.exists()) {
-        const data = snapshot.val();
-        // Update the state with the fetched storyCounts
-        setStoryCounts(data);
-      } else {
-        console.error("No data available");
-      }
-    });
-
-    // Clean up the listener when the component unmounts
-    return () => {
-      // Detach the listener
-      onValue(storyCountRef, null);
-    };
-  }, []);
-
- 
-
-
-
-  // Hook to navigate to different pages
-  const navigate = useNavigate();
-
-  // Component to render each list item
-  function ListItem({ value }) {
-    const handleClick = () => {
-      onChildValue(value);
-
-      // navigate(`/${value}`);
-    };
-
-    return <li onClick={handleClick}>{value}</li>;
-  }
+  const [displayTopics, setDisplayTopics] = useState([]);
+  const [hasFavouriteTopics, setHasFavouriteTopics] = useState(false);
 
   // List of popular topics
   const popularTopics = [
@@ -60,133 +22,71 @@ export default function Popular({ onChildValue }) {
     "GOA DIARIES",
     "NITK STUFFS",
     "IIM THINGS",
-    
     "VIKAS MEENA",
   ];
 
-
-
-
-
- 
-  const savedCategory = JSON.parse(localStorage.getItem("starClicked")) || {};
-
-  // Filter out favourite and non-favourite topics based on starClicked by user
-  // starClicked true means favourite, false means non-favourite
-  const favouriteTopics = Object.keys(savedCategory).filter(
-    (category) => savedCategory[category]
-  );
-  const nonFavouriteTopics = Object.keys(savedCategory).filter(
-    (category) => !savedCategory[category]
-  );
-
-  // Set to store topics to display the sorted list of topics based on favourite and popular
-  // Using a Set to avoid duplication
-  const displayTopicsSet = new Set([...favouriteTopics]);
-  console.log('dispaly topiic set', displayTopicsSet);
-
-
-  // Calculate the number of remaining slots as we have to display 10 topics in the list
-  var remainingSlots = 7 - displayTopicsSet.size;
-  console.log('remaining slot ', remainingSlots)
-
-  // Loop to fill remaining slots with popular topics
-  for (var i = 0; i < remainingSlots && i < popularTopics.length; i++) {
-    displayTopicsSet.add(popularTopics[i]);
-  }
-
-  console.log('added display topic set', displayTopicsSet);
-  // Convert Set back to Array if needed
-  const displayTopics = Array.from(displayTopicsSet);
-   console.log('display topics ', displayTopics);
-  
-  // Function to fetch the number of stories in each category
-  const noOfStoriesInEachCategory = async (category) => {
-    try {
-
-      
-
-
-      // Fetch the number of stories in the category
-      const snapshot = await get(
-        ref(database, `List/${category?.toUpperCase()}`)
-      );
-
-      if (snapshot.exists()) {
-        const noOfStories = Object.entries(snapshot.val()).length;
-        return noOfStories;
-      } else {
-        return 0;
-      }
-    } catch (error) {
-      console.error("Error fetching data:");
-      throw error; // Propagate the error
-    }
-  };
-
-  // Using Promise.all to fetch the number of stories for each category concurrently
-  const fetchStoriesPromises = favouriteTopics.map((cat) =>
-    noOfStoriesInEachCategory(cat),
-
-  );
-
-
   useEffect(() => {
-    Promise.all(fetchStoriesPromises)
-      .then((noOfStoriesArray) => {
-        // Combine categories and their corresponding story counts into an array of objects
-        const categoryStoryCounts = favouriteTopics.map((category, index) => ({
-          category,
-          storyCount: noOfStoriesArray[index],
-        }));
-
-        // Sort the array based on story counts in descending order
-        categoryStoryCounts.sort((a, b) => b.storyCount - a.storyCount);
-
-        // Extract sorted categories from the sorted array
-        const sortedDisplayTopics = categoryStoryCounts.map(
-          (item) => item.category
-        );
-        setSortedDisplayTopics(sortedDisplayTopics);
-        console.log('display topics ', displayTopics);
-        console.log('sorted display topic', sortedDisplayTopics)
-      })
-      .catch((error) => {
-        toast.error("Error fetching data" + error);
-      });
+    const fetchDisplayTopics = async () => {
+      try {
+        const savedCategory = JSON.parse(localStorage.getItem("starClicked")) || {};
+        const favouriteTopics = Object.keys(savedCategory).filter((category) => savedCategory[category]);
+        const hasFavouriteTopics = favouriteTopics.length > 0;
+          setHasFavouriteTopics(hasFavouriteTopics);
+        let topicsToShow = [];
+        if (hasFavouriteTopics) {
+          const favouriteTopicsWithCounts = await Promise.all(
+            favouriteTopics.map(async (category) => {
+              const snapshot = await get(ref(database, `List/${category.toUpperCase()}`));
+              if (snapshot.exists()) {
+                return { category, storyCount: Object.keys(snapshot.val()).length };
+              } else {
+                return { category, storyCount: 0 }; // Set storyCount to 0 if snapshot doesn't exist
+              }
+            })
+          );
+          // Sort favourite topics by story count in descending order
+          favouriteTopicsWithCounts.sort((a, b) => b.storyCount - a.storyCount);
+          // Limit favourite topics to a maximum of 6
+          topicsToShow = favouriteTopicsWithCounts.slice(0, 6).map(({ category }) => category);
+        } else {
+          // No favourite topics, show the first 6 popular topics
+          topicsToShow = popularTopics.slice(0, 6);
+        }
+        // Fill remaining slots with popular topics if needed
+        if (topicsToShow.length < 6) {
+          const remainingPopularTopics = popularTopics.filter((topic) => !topicsToShow.includes(topic));
+          const remainingSlots = 6 - topicsToShow.length;
+          topicsToShow.push(...remainingPopularTopics.slice(0, remainingSlots));
+        }
+        setDisplayTopics(topicsToShow);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        toast.error("Error fetching data: " + error.message);
+      }
+    };
+    fetchDisplayTopics();
   }, [localStorage.getItem("starClicked")]);
 
-  const remaining = 6 - sortedDisplayTopics.length;
-  let pushedCount = 0;
-  
-  for (let i = 0; pushedCount < remaining && i < popularTopics.length; i++) {
-      const popularTopic = popularTopics[i];
-      if (!sortedDisplayTopics.includes(popularTopic)) {
-          sortedDisplayTopics.push(popularTopic);
-          pushedCount++; // Increment pushedCount only when a topic is pushed
-      }
+  // Component to render each list item
+  function ListItem({ value }) {
+    const handleClick = () => {
+      onChildValue(value);
+      // navigate(`/${value}`);
+    };
+    return <li onClick={handleClick}>{value}</li>;
   }
-  
-
 
   return (
     <div className="popular">
-      {/* Display  header based on whether there are favourite topics or popular topics*/}
-      <h1>
-        {favouriteTopics.length > 0 ? "Categories for you" : "Popular Categories"}
-      </h1>
+      <h1>{hasFavouriteTopics ? "Categories for you" : "Popular Categories"}</h1>
       <div className="list">
         <ul className="list-items">
-          {/* Render the  list of topics */}
-          {favouriteTopics.length > 0
-            ? sortedDisplayTopics.map((topic, index) => (
-                <ListItem key={index} value={topic} />
-              ))
-            : popularTopics.map((topic) => (
-                <ListItem key={topic} value={topic} />
-              ))}
+          {displayTopics.map((topic, index) => (
+            <ListItem key={index} value={topic} />
+          ))}
         </ul>
       </div>
     </div>
   );
 }
+

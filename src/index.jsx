@@ -4,6 +4,7 @@ import App from "./App";
 import LatestStories from "./LatestStories";
 import Popular from "./Popular";
 import Swipper from "./Swipper";
+import Pop from "./Pop";
 
 
 // import app from './firebase'
@@ -16,6 +17,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 
 //  <Swipper/>
  <App />
+
+// {/* <Pop/> */}
  
 
 );

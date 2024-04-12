@@ -19,7 +19,7 @@ function App() {
           
           {/* Route for category pages */}
           <Route path="/:category" element={<Story/>} />
-          <Route path="/:category/:story" element={<Story />} />
+          {/* <Route path="/:cat/:story" element={<Story />} /> */}
 {/* hi this is venom */}
         </Routes>
         
