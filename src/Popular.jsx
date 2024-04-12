@@ -32,7 +32,7 @@ export default function Popular({ onChildValue }) {
         const favouriteTopics = Object.keys(savedCategory).filter((category) => savedCategory[category]);
         const hasFavouriteTopics = favouriteTopics.length > 0;
           setHasFavouriteTopics(hasFavouriteTopics);
-        let topicsToShow = [];
+        let topicsToShow = [...popularTopics];
         if (hasFavouriteTopics) {
           const favouriteTopicsWithCounts = await Promise.all(
             favouriteTopics.map(async (category) => {
@@ -58,7 +58,7 @@ export default function Popular({ onChildValue }) {
           const remainingSlots = 6 - topicsToShow.length;
           topicsToShow.push(...remainingPopularTopics.slice(0, remainingSlots));
         }
-        setDisplayTopics(topicsToShow);
+        setDisplayTopics([...topicsToShow]);
       } catch (error) {
         console.error("Error fetching data:", error);
         toast.error("Error fetching data: " + error.message);
@@ -78,7 +78,7 @@ export default function Popular({ onChildValue }) {
 
   return (
     <div className="popular">
-      <h1>{hasFavouriteTopics ? "Categories for you" : "Popular Categories"}</h1>
+      <h1>{hasFavouriteTopics ? "Categories for you " : "Popular Categories"}</h1>
       <div className="list">
         <ul className="list-items">
           {displayTopics.map((topic, index) => (

@@ -2275,7 +2275,7 @@ textarea {
   }
 
   .item-section-container {
-    width: 100%;
+    width: 790px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -2285,7 +2285,7 @@ textarea {
     overscroll-behavior-inline: contain;
     height: 275px !important;
     /* margin-bottom: 30% !important; */
-  }
+}
 
   .item-section-container::after {
     content: "";
@@ -2307,6 +2307,23 @@ textarea {
     overflow: hidden;
     text-overflow: ellipsis; /* Truncate text with ellipsis */
   }
+
+  .item-category {
+    width: 770px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.show-para > p {
+  max-height: 100%;
+  overflow-y: auto;
+  margin: 0;
+  width: 780px;
+  position: relative;
+  display: inline;
+}
 }
 
 @media screen and (min-width: 750px) and (max-width: 768px) {
