@@ -2229,8 +2229,8 @@ textarea {
   }
 
   .item-section {
-    width: 88%;
-  }
+    width: 100%;
+}
 
   .show-para > p {
     max-height: 100%;
