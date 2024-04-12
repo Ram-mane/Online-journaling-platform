@@ -27,7 +27,6 @@ import { Card, CardBody, CardHeader, Container } from "reactstrap";
 import { toast } from "react-toastify";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import LatestStories from "./LatestStories";
-import Pop from "./Pop";
 
 const appSetting = {
   databaseURL: "https://sysu-9d83f-default-rtdb.asia-southeast1.firebasedatabase.app/"

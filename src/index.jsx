@@ -1,10 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import LatestStories from "./LatestStories";
-import Popular from "./Popular";
-import Swipper from "./Swipper";
-import Pop from "./Pop";
 
 
 // import app from './firebase'
@@ -15,10 +11,8 @@ import Pop from "./Pop";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
 
-//  <Swipper/>
  <App />
 
-// {/* <Pop/> */}
  
 
 );

@@ -2732,6 +2732,8 @@ textarea {
   top: -30%;
 }
 
+
+
 .section-3 {
   display: block;
   position: fixed;
@@ -2739,6 +2741,7 @@ textarea {
   right: 6px;
   height: 100vh;
   width: 330px;
+  z-index: 9999;
 }
 
 @media screen and (max-width: 1438px) {
