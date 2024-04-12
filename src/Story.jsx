@@ -570,7 +570,7 @@ setShow(false)
   const revealMain = {
     position: "absolute",
     top: "10px",
-    left: windowWidth > 375 ? "-50%" : windowWidth > 320 ? "-69%" : "-49%",
+    left: windowWidth > 375 ? "-60%" : windowWidth > 320 ? "-69%" : "-49%",
     width: windowWidth > 320 ? "265%" : "310%",
     height: "287px",
     boxShadow: "1px 1px 0px #000000",
